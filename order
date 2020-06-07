@@ -1,0 +1,60 @@
+#!/bin/sh
+
+set -e
+
+abort() {
+  printf '%b %s\n' "$EXIT" "$1"
+  [ -d "$RECIPES" ] && rm -r "$RECIPES"
+  exit 1
+}
+
+available() {
+  command -v "$1" > /dev/null 2>&1
+}
+
+cook() {
+  PREFIX="$PREFIX "
+  [ -f "$RECIPES"/"$1" ] || curl -sS "$REPO"/"$COOKBOOK"/"$1" -o "$RECIPES"/"$1"
+  log info "Cooking $1"
+  . "$RECIPES"/"$1"
+  log success "$1 is ready"
+  PREFIX="${PREFIX:0:-1}"
+}
+
+log() {
+  local icon
+  case $1 in
+    info) icon="\033[94m\u2139\033[0m";;
+    success) icon="\033[92m\u2713\033[0m";;
+    warning) icon="\033[93m\u26A0\033[0m";;
+    error) icon="\033[91m\u2717\033[0m";;
+    *) icon="";;
+  esac
+
+  printf "%s%b %s\\n" $PREFIX $icon "$2"
+}
+
+REPO="https://raw.githubusercontent.com/Funk66/menu/master"
+
+if available apt-get
+then
+  COOKBOOK="apt"
+elif available pacman
+then
+  COOKBOOK="pac"
+elif available dnf
+then
+  COOKBOOK="dnf"
+else
+  abort "Unable to recognize OS"
+fi
+
+RECIPES=$(mktemp -d)
+
+while [ $# -gt 0 ]
+do
+  cook "$1"
+  shift 1
+done
+
+log serve "Bon appéti!"

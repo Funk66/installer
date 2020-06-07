@@ -1,0 +1,4 @@
+#!/bin/sh
+
+cook update
+sudo dnf install -q -y tmux
