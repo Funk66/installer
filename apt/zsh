@@ -1,0 +1,6 @@
+#!/bin/sh
+
+sudo apt install zsh
+touch ~/.zshrc
+mkdir -p ~/.config/zsh
+chsh -s $(which zsh)

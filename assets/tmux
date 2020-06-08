@@ -1,0 +1,17 @@
+# vi: filetype=tmux
+
+set -g pane-border-style fg=black,bg=default
+set -g pane-active-border-style fg=black,bg=default
+
+set -g status off
+
+set -g default-terminal "tmux-256color"
+# set -as terminal-features ",gnome*:RGB"  <-- Tmux 3.2
+set -as terminal-overrides ",gnome*:Tc"
+
+set escape-time 100
+set -g mouse on
+set-window-option -g mode-keys vi
+
+bind '%' split-window -h -c '#{pane_current_path}'
+bind '"' split-window -v -c '#{pane_current_path}'
