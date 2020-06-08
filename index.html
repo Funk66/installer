@@ -1,0 +1,37 @@
+#!/bin/sh
+
+set -e
+
+install() {
+  if [ ! -e "$SCRIPTS"/"$1" ]
+  then
+    curl -sS "$URL"/"$COOKBOOK"/"$1" -o "$SCRIPTS"/"$1"
+    printf "\\r⏩ %s" "$1"
+    . "$SCRIPTS"/"$1"
+    printf "\\r✅ %s\\n" "$1"
+  fi
+}
+
+URL="https://raw.githubusercontent.com/Funk66/menu/master"
+
+for INSTALLER in apt dnf pacman
+do
+  command -v $INSTALLER > /dev/null 2>&1 && break
+done
+
+if [ -z $INSTALLER ]
+then
+  echo "❌ Unable to recognize OS"
+  exit 1
+fi
+
+SCRIPTS=$(mktemp -d)
+
+while [ $# -gt 0 ]
+do
+  install "$1"
+  shift 1
+done
+
+rm -r "$SCRIPTS"
+echo "Done"
