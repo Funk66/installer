@@ -16,6 +16,7 @@ export EDITOR='vi'
 export USE_EDITOR=$EDITOR
 export VISUAL=$EDITOR
 export PAGER="less"
+export KEYTIMEOUT=1
 
 export CLICOLOR=1  # OSx
 export COMPLETION_WAITING_DOTS="true"

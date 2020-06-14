@@ -2,3 +2,5 @@
 
 install zsh
 install tmux
+install fzf
+install vim

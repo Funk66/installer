@@ -11,7 +11,7 @@ install() {
 }
 
 get() {
-  curl -sS "https://raw.githubusercontent.com/Funk66/installer/master/$1" -o "$2"
+  curl -sS "https://raw.githubusercontent.com/Funk66/installer/master/$1" -o "$2" --create-dirs
 }
 
 for INSTALLER in apt dnf pacman

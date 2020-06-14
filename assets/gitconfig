@@ -1,0 +1,39 @@
+[user]
+  name = Guillermo Guirao Aguilar
+  email = contact@guillermoguiraoaguilar.com
+[core]
+  editor = vim
+  excludesfile = ~/.gitignore_global
+[mergetool]
+  path = nvim
+  trustExitCode = true
+[merge]
+  tool = vimdiff
+[mergetool "vimdiff"]
+  path = nvim
+[diff]
+  tool = vimdiff
+[difftool]
+  prompt = false
+  trustExitCode = true
+[alias]
+  lg1 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)'
+  lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''        %C(white)%s%C(reset) %C(dim white)- %an%C(reset)'
+  lg = !"git lg1"
+  up = pull --rebase --prune --autostash
+[push]
+  default = current
+[color]
+	ui = true
+[color "diff-highlight"]
+	oldNormal = red bold
+	oldHighlight = red bold 52
+	newNormal = green bold
+	newHighlight = green bold 22
+[color "diff"]
+	meta = yellow
+	frag = magenta bold
+	commit = yellow bold
+	old = red bold
+	new = green bold
+	whitespace = red reverse

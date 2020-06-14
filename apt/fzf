@@ -1,0 +1,10 @@
+#!/bin/sh
+
+curl -sSL https://github.com/junegunn/fzf-bin/releases/download/0.21.1/fzf-0.21.1-linux_amd64.tgz | tar -xzC ~/.local/bin
+chmod +x ~/.local/bin/fzf
+
+if command -v tmux > /dev/null
+then
+  curl -sSL https://raw.githubusercontent.com/junegunn/fzf/master/bin/fzf-tmux -o ~/.local/bin/fzf-tmux
+  chmod +x ~/.local/bin/fzf ~/.local/bin/fzf-tmux
+fi

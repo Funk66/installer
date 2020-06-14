@@ -2,3 +2,4 @@
 
 sudo apt install -y git
 get assets/gitignore ~/.gitignore_global
+get assets/gitconfig ~/.gitconfig
