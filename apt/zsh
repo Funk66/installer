@@ -1,6 +1,10 @@
 #!/bin/sh
 
-sudo apt install zsh
-touch ~/.zshrc
+install git
+
+sudo apt install -y zsh
+get assets/zshrc ~/.zshrc
 mkdir -p ~/.config/zsh
-chsh -s $(which zsh)
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/.config/zsh/p10k
+get assets/zsh/p10k.zsh ~/.config/zsh/p10k.zsh
+sudo chsh -s "$(command -v zsh)"

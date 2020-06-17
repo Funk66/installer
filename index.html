@@ -1,18 +1,18 @@
 #!/bin/sh
 
-set -ex
+set -e
 
 install() {
   if [ ! -e "$SCRIPTS"/"$1" ]
   then
-    curl -sS "$URL"/"$INSTALLER"/"$1" -o "$SCRIPTS"/"$1"
-    printf "\\r⏩ %s" "$1"
+    get "$INSTALLER/$1" "$SCRIPTS/$1"
     . "$SCRIPTS"/"$1"
-    printf "\\r✅ %s\\n" "$1"
   fi
 }
 
-URL="https://raw.githubusercontent.com/Funk66/installer/master"
+get() {
+  curl -sS "https://raw.githubusercontent.com/Funk66/installer/master/$1" -o "$2"
+}
 
 for INSTALLER in apt dnf pacman
 do

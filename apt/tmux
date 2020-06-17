@@ -1,7 +1,8 @@
 #!/bin/sh
 
 install zsh
-sudo apt install tmux
-curl -sSL "$URL"/assets/tmux -o ~/.config/tmux
-curl -sSL "$URL"/assets/zsh/tmux -o ~/.config/zsh/tmux
+
+sudo apt install -y tmux
+get assets/tmux ~/.config/tmux
+get assets/zsh/tmux.zsh ~/.config/zsh/tmux.zsh
 grep '. ~/.config/zsh' ~/.zshrc || echo '. ~/.config/zsh' > ~/.zshrc
