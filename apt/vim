@@ -5,7 +5,6 @@ install git
 sudo apt install -y neovim
 [ -d ~/.config/nvim ] || git clone --depth=1 https://github.com/Funk66/vim.git ~/.config/nvim
 curl -sSL https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim -o ~/.config/nvim/autoload/plug.vim --create-dirs
-get assets/vim .config/nvim/init.vim
 if [ -f /usr/bin/vim ]
 then
   [ -f ~/.local/bin/vim ] || ln -s "$(command -v nvim)" ~/.local/bin/vim
@@ -13,5 +12,5 @@ else
   sudo ln -s "$(command -v nvim)" /usr/bin/vim
 fi
 vim +PlugInstall +qa
-available pip && pip install --upgrade --user flake8 mypy black
-available npm && npm i -g eslint tslint stylelint
+available pip3 && pip3 install --upgrade --user flake8 mypy black jedi pynvim
+available npm && sudo npm i -g eslint tslint stylelint neovim

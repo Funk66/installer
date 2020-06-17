@@ -1,0 +1,9 @@
+#!/bin/sh
+
+sudo apt install -y python3-pip
+pip3 install --user --upgrade IPython
+if [ -f ~/.zshrc ]
+then
+  grep -q 'export PYTHONBREAKPOINT="ipdb.set_trace"' ~/.zshrc || echo 'export PYTHONBREAKPOINT="ipdb.set_trace"' >> ~/.zshrc
+  grep -q 'export VIRTUAL_ENV_DISABLE_PROMPT=1' ~/.zshrc || echo 'export VIRTUAL_ENV_DISABLE_PROMPT=1' >> ~/.zshrc
+fi

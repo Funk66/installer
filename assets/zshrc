@@ -21,16 +21,17 @@ export KEYTIMEOUT=1
 export CLICOLOR=1  # OSx
 export COMPLETION_WAITING_DOTS="true"
 
-# Python
-export VIRTUAL_ENV_DISABLE_PROMPT=1
-export PYTHONBREAKPOINT="pdb.set_trace"
-
 setopt INC_APPEND_HISTORY
 setopt NO_BEEP
 setopt RM_STAR_WAIT
 setopt NOCLOBBER
+setopt EXTENDED_GLOB
 
 bindkey -v
+
+zstyle ':completion:*' special-dirs true
+autoload -Uz compinit
+compinit
 
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
