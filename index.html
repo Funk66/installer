@@ -14,9 +14,13 @@ get() {
   curl -sS "https://raw.githubusercontent.com/Funk66/installer/master/$1" -o "$2" --create-dirs
 }
 
+available() {
+  command -v "$1" > /dev/null 2>&1
+}
+
 for INSTALLER in apt dnf pacman
 do
-  command -v $INSTALLER > /dev/null 2>&1 && break
+  available $INSTALLER && break
 done
 
 if [ -z $INSTALLER ]

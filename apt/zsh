@@ -5,9 +5,9 @@ install git
 sudo apt install -y zsh
 get assets/zshrc ~/.zshrc
 get assets/zsh/p10k.zsh ~/.config/zsh/p10k.zsh
-git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/.config/zsh/p10k
+[ -d ~/.config/zsh/p10k ] || git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/.config/zsh/p10k
 sudo chsh -s "$(command -v zsh)"
-if command -v fzf > /dev/null && ! command -v fzf-tmux > /dev/null
+if available fzf && ! available fzf-tmux
 then
   install fzf
 fi
