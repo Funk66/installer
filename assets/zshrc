@@ -2,52 +2,38 @@
 
 export TERM=xterm-256color
 export LC_ALL=en_US.UTF-8
-#export LANGUAGE=en_GB:en
-
 export PATH=$HOME/.local/bin:$PATH
-export HISTIGNORE="&:ls:[bf]g:exit:reset:clear:cd *"
-export HISTSIZE=25000
-export HISTFILE=~/.local/zsh/history
-export SAVEHIST=10000
 
-export EDITOR='vim'
+export HISTIGNORE="&:ls:[bf]g:exit:reset:clear:cd *"
+export HISTFILE=~/.local/zsh/history
+export HISTSIZE=25000
+export SAVEHIST=10000
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_IGNORE_SPACE
+setopt HIST_REDUCE_BLANKS
+
+export EDITOR='vi'
 export USE_EDITOR=$EDITOR
 export VISUAL=$EDITOR
 export PAGER="less"
 
+export CLICOLOR=1  # OSx
 export COMPLETION_WAITING_DOTS="true"
-
-export PROMPT="%3."
-export RPROMPT="%u"
-export ZLE_RPROMPT_INDENT=0
 
 # Python
 export VIRTUAL_ENV_DISABLE_PROMPT=1
-export PYTHONBREAKPOINT=ipdb.set_trace
+export PYTHONBREAKPOINT="pdb.set_trace"
 
-HISTCONTROL=ignoreboth
 setopt INC_APPEND_HISTORY
-setopt HIST_IGNORE_ALL_DUPS
-setopt HIST_IGNORE_SPACE
-setopt HIST_REDUCE_BLANKS
 setopt NO_BEEP
 setopt RM_STAR_WAIT
-# Don’t write over existing files with >, use >! instead
 setopt NOCLOBBER
-
 
 bindkey -v
 
-# Enable color support of ls
-#if [[ "$TERM" != "dumb" ]]; then
-    #if [[ -x `which dircolors 2> /dev/null` ]]; then
-	#eval `dircolors -b`
-	#alias 'ls=ls --color=auto'
-    #fi
-#fi
-
-
-# OSx
-export CLICOLOR=1
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
 
 . ~/.config/zsh/p10k/powerlevel10k.zsh-theme
+. ~/.config/zsh/p10k.zsh
