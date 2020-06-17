@@ -17,7 +17,6 @@
   # The list of segments shown on the left. Fill it with the most important segments.
   typeset -g POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
     dir                     # current directory
-    vcs                     # git status
   )
 
   # The list of segments shown on the right. Fill it with less important segments.
@@ -28,38 +27,16 @@
     status                  # exit code of the last command
     command_execution_time  # duration of the last command
     background_jobs         # presence of background jobs
+    vcs                     # git status
     direnv                  # direnv status (https://direnv.net/)
     virtualenv              # python virtual environment (https://docs.python.org/3/library/venv.html)
-    pyenv                   # python environment (https://github.com/pyenv/pyenv)
-    goenv                   # go environment (https://github.com/syndbg/goenv)
-    nvm                     # node.js version from nvm (https://github.com/nvm-sh/nvm)
     kubecontext             # current kubernetes context (https://kubernetes.io/)
     terraform               # terraform workspace (https://www.terraform.io)
     aws                     # aws profile (https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html)
-    gcloud                  # google cloud cli account and project (https://cloud.google.com/)
-    google_app_cred         # google application credentials (https://cloud.google.com/docs/authentication/production)
     context                 # user@hostname
-    nordvpn                 # nordvpn connection status, linux only (https://nordvpn.com/)
-    ranger                  # ranger shell (https://github.com/ranger/ranger)
-    nnn                     # nnn shell (https://github.com/jarun/nnn)
     vim_shell               # vim shell indicator (:sh)
-    midnight_commander      # midnight commander shell (https://midnight-commander.org/)
     vi_mode                 # vi mode (you don't need this if you've enabled prompt_char)
-    # vpn_ip                # virtual private network indicator
-    # load                  # CPU load
-    # disk_usage            # disk usage
-    # ram                   # free RAM
-    # swap                  # used swap
-    todo                    # todo items (https://github.com/todotxt/todo.txt-cli)
-    timewarrior             # timewarrior tracking status (https://timewarrior.net/)
-    taskwarrior             # taskwarrior task count (https://taskwarrior.org/)
     time                    # current time
-    # ip                    # ip address and bandwidth usage for a specified network interface
-    # public_ip             # public IP address
-    # proxy                 # system-wide http/https/ftp proxy
-    # battery               # internal battery
-    # wifi                  # wifi speed
-    # example               # example user-defined segment (see prompt_example function below)
   )
 
   # Defines character set used by powerlevel10k. It's best to let `p10k configure` set it for you.
@@ -341,13 +318,6 @@
   # Don't show the number of background jobs.
   typeset -g POWERLEVEL9K_BACKGROUND_JOBS_VERBOSE=false
 
-  ##########[ nordvpn: nordvpn connection status, linux only (https://nordvpn.com/) ]###########
-  # Hide NordVPN connection indicator when not connected.
-  typeset -g POWERLEVEL9K_NORDVPN_{DISCONNECTED,CONNECTING,DISCONNECTING}_CONTENT_EXPANSION=
-  typeset -g POWERLEVEL9K_NORDVPN_{DISCONNECTED,CONNECTING,DISCONNECTING}_VISUAL_IDENTIFIER_EXPANSION=
-  # Custom icon.
-  # typeset -g POWERLEVEL9K_NORDVPN_VISUAL_IDENTIFIER_EXPANSION='⭐'
-
   ###########[ vi_mode: vi mode (you don't need this if you've enabled prompt_char) ]###########
   # Foreground color.
   typeset -g POWERLEVEL9K_VI_MODE_FOREGROUND=0
@@ -403,44 +373,6 @@
   typeset -g POWERLEVEL9K_VIRTUALENV_{LEFT,RIGHT}_DELIMITER=
   # Custom icon.
   # typeset -g POWERLEVEL9K_VIRTUALENV_VISUAL_IDENTIFIER_EXPANSION='⭐'
-
-  ################[ pyenv: python environment (https://github.com/pyenv/pyenv) ]################
-  # Pyenv color.
-  # typeset -g POWERLEVEL9K_PYENV_FOREGROUND=0
-  # typeset -g POWERLEVEL9K_PYENV_BACKGROUND=4
-  # Hide python version if it doesn't come from one of these sources.
-  typeset -g POWERLEVEL9K_PYENV_SOURCES=(shell local global)
-  # If set to false, hide python version if it's the same as global:
-  # $(pyenv version-name) == $(pyenv global).
-  typeset -g POWERLEVEL9K_PYENV_PROMPT_ALWAYS_SHOW=false
-  # If set to false, hide python version if it's equal to "system".
-  typeset -g POWERLEVEL9K_PYENV_SHOW_SYSTEM=true
-
-  # Pyenv segment format. The following parameters are available within the expansion.
-  #
-  # - P9K_CONTENT                Current pyenv environment (pyenv version-name).
-  # - P9K_PYENV_PYTHON_VERSION   Current python version (python --version).
-  #
-  # The default format has the following logic:
-  #
-  # 1. Display "$P9K_CONTENT $P9K_PYENV_PYTHON_VERSION" if $P9K_PYENV_PYTHON_VERSION is not
-  #   empty and unequal to $P9K_CONTENT.
-  # 2. Otherwise display just "$P9K_CONTENT".
-  typeset -g POWERLEVEL9K_PYENV_CONTENT_EXPANSION='${P9K_CONTENT}${${P9K_PYENV_PYTHON_VERSION:#$P9K_CONTENT}:+ $P9K_PYENV_PYTHON_VERSION}'
-
-  ################[ goenv: go environment (https://github.com/syndbg/goenv) ]################
-  # Goenv color.
-  # typeset -g POWERLEVEL9K_GOENV_FOREGROUND=0
-  # typeset -g POWERLEVEL9K_GOENV_BACKGROUND=4
-  # Hide go version if it doesn't come from one of these sources.
-  typeset -g POWERLEVEL9K_GOENV_SOURCES=(shell local global)
-  # If set to false, hide go version if it's the same as global:
-  # $(goenv version-name) == $(goenv global).
-  typeset -g POWERLEVEL9K_GOENV_PROMPT_ALWAYS_SHOW=false
-  # If set to false, hide go version if it's equal to "system".
-  typeset -g POWERLEVEL9K_GOENV_SHOW_SYSTEM=true
-  # Custom icon.
-  # typeset -g POWERLEVEL9K_GOENV_VISUAL_IDENTIFIER_EXPANSION='⭐'
 
   ################[ terraform: terraform workspace (https://www.terraform.io) ]#################
   # POWERLEVEL9K_TERRAFORM_CLASSES is an array with even number of elements. The first element
@@ -598,51 +530,6 @@
   # typeset -g POWERLEVEL9K_AWS_DEFAULT_FOREGROUND=7
   # typeset -g POWERLEVEL9K_AWS_DEFAULT_BACKGROUND=1
   # typeset -g POWERLEVEL9K_AWS_DEFAULT_VISUAL_IDENTIFIER_EXPANSION='⭐'
-
-  #[ aws_eb_env: aws elastic beanstalk environment (https://aws.amazon.com/elasticbeanstalk/) ]#
-  # AWS Elastic Beanstalk environment color.
-  # typeset -g POWERLEVEL9K_AWS_EB_ENV_FOREGROUND=2
-  # typeset -g POWERLEVEL9K_AWS_EB_ENV_BACKGROUND=0
-  # Custom icon.
-  # typeset -g POWERLEVEL9K_AWS_EB_ENV_VISUAL_IDENTIFIER_EXPANSION='⭐'
-
-  ########################[ vpn_ip: virtual private network indicator ]#########################
-  # VPN IP color.
-  # typeset -g POWERLEVEL9K_VPN_IP_FOREGROUND=0
-  # typeset -g POWERLEVEL9K_VPN_IP_BACKGROUND=6
-  # When on VPN, show just an icon without the IP address.
-  # Tip: To display the private IP address when on VPN, remove the next line.
-  typeset -g POWERLEVEL9K_VPN_IP_CONTENT_EXPANSION=
-  # Regular expression for the VPN network interface. Run `ifconfig` or `ip -4 a show` while on VPN
-  # to see the name of the interface.
-  typeset -g POWERLEVEL9K_VPN_IP_INTERFACE='(wg|(.*tun))[0-9]*'
-  # If set to true, show one segment per matching network interface. If set to false, show only
-  # one segment corresponding to the first matching network interface.
-  # Tip: If you set it to true, you'll probably want to unset POWERLEVEL9K_VPN_IP_CONTENT_EXPANSION.
-  typeset -g POWERLEVEL9K_VPN_IP_SHOW_ALL=false
-  # Custom icon.
-  # typeset -g POWERLEVEL9K_VPN_IP_VISUAL_IDENTIFIER_EXPANSION='⭐'
-
-  ###########[ ip: ip address and bandwidth usage for a specified network interface ]###########
-  # IP color.
-  typeset -g POWERLEVEL9K_IP_BACKGROUND=4
-  typeset -g POWERLEVEL9K_IP_FOREGROUND=0
-  # The following parameters are accessible within the expansion:
-  #
-  #   Parameter             | Meaning
-  #   ----------------------+---------------
-  #   P9K_IP_IP         | IP address
-  #   P9K_IP_INTERFACE  | network interface
-  #   P9K_IP_RX_BYTES   | total number of bytes received
-  #   P9K_IP_TX_BYTES   | total number of bytes sent
-  #   P9K_IP_RX_RATE    | receive rate (since last prompt)
-  #   P9K_IP_TX_RATE    | send rate (since last prompt)
-  typeset -g POWERLEVEL9K_IP_CONTENT_EXPANSION='${P9K_IP_RX_RATE:+⇣$P9K_IP_RX_RATE }${P9K_IP_TX_RATE:+⇡$P9K_IP_TX_RATE }$P9K_IP_IP'
-  # Show information for the first network interface whose name matches this regular expression.
-  # Run `ifconfig` or `ip -4 a show` to see the names of all network interfaces.
-  typeset -g POWERLEVEL9K_IP_INTERFACE='e.*'
-  # Custom icon.
-  # typeset -g POWERLEVEL9K_IP_VISUAL_IDENTIFIER_EXPANSION='⭐'
 
   ####################################[ time: current time ]####################################
   # Current time color.
