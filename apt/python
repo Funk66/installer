@@ -7,3 +7,4 @@ then
   grep -q 'export PYTHONBREAKPOINT="ipdb.set_trace"' ~/.zshrc || echo 'export PYTHONBREAKPOINT="ipdb.set_trace"' >> ~/.zshrc
   grep -q 'export VIRTUAL_ENV_DISABLE_PROMPT=1' ~/.zshrc || echo 'export VIRTUAL_ENV_DISABLE_PROMPT=1' >> ~/.zshrc
 fi
+get assets/flake8 ~/.config/flake8
