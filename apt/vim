@@ -1,13 +1,18 @@
 #!/bin/sh
 
 install git
+install fonts
 
 sudo apt install -y neovim
 [ -d ~/.config/nvim ] || git clone --depth=1 https://github.com/Funk66/vim.git ~/.config/nvim
 curl -sSL https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim -o ~/.config/nvim/autoload/plug.vim --create-dirs
 if [ -f /usr/bin/vim ]
 then
-  [ -f ~/.local/bin/vim ] || ln -s "$(command -v nvim)" ~/.local/bin/vim
+  if [ ! -f ~/.local/bin/vim ]
+  then
+    mkdir -p ~/.local/bin
+    ln -s "$(command -v nvim)" ~/.local/bin/vim
+  fi
 else
   sudo ln -s "$(command -v nvim)" /usr/bin/vim
 fi

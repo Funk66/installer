@@ -5,4 +5,4 @@ install zsh
 sudo apt install -y tmux
 get assets/tmux ~/.config/tmux
 get assets/zsh/tmux.zsh ~/.config/zsh/tmux.zsh
-grep '. ~/.config/zsh' ~/.zshrc || echo '. ~/.config/zsh' > ~/.zshrc
+grep '. ~/.config/zsh/tmux.zsh' ~/.zshrc || echo '. ~/.config/zsh/tmux.zsh' >> ~/.zshrc

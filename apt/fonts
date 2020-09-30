@@ -6,3 +6,4 @@ NERDFONT=$(mktemp)
 curl -L --progress-bar https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/JetBrainsMono.zip -o "$NERDFONT"
 unzip -q "$NERDFONT" -d ~/.local/share/fonts
 fc-cache -f ~/.local/share/fonts
+rm "$NERDFONT"
