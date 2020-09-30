@@ -1,11 +1,7 @@
 #!/bin/sh
 
 mkdir -p ~/.local/bin
-curl -sSL https://github.com/junegunn/fzf-bin/releases/download/0.21.1/fzf-0.21.1-linux_amd64.tgz | tar -xzC ~/.local/bin
+curl -sSL https://github.com/junegunn/fzf-bin/releases/download/0.22.0/fzf-0.22.0-linux_amd64.tgz | tar -xzC ~/.local/bin
 chmod +x ~/.local/bin/fzf
-
-if available tmux
-then
-  curl -sSL https://raw.githubusercontent.com/junegunn/fzf/master/bin/fzf-tmux -o ~/.local/bin/fzf-tmux
-  chmod +x ~/.local/bin/fzf ~/.local/bin/fzf-tmux
-fi
+curl -sSL https://raw.githubusercontent.com/junegunn/fzf/master/shell/key-bindings.zsh -o ~/.config/zsh/fzf.zsh
+grep '. ~/.config/zsh/fzf.zsh' ~/.zshrc || echo '. ~/.config/zsh/fzf.zsh' >> ~/.zshrc

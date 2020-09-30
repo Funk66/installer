@@ -6,7 +6,7 @@ sudo apt install -y zsh
 get assets/zshrc ~/.zshrc
 get assets/zsh/p10k.zsh ~/.config/zsh/p10k.zsh
 [ -d ~/.config/zsh/p10k ] || git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/.config/zsh/p10k
-sudo chsh -s "$(command -v zsh)"
+sudo chsh -s "$(command -v zsh)" "$USER"
 if available fzf && ! available fzf-tmux
 then
   install fzf

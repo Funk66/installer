@@ -6,3 +6,9 @@ sudo apt install -y tmux
 get assets/tmux ~/.config/tmux
 get assets/zsh/tmux.zsh ~/.config/zsh/tmux.zsh
 grep '. ~/.config/zsh/tmux.zsh' ~/.zshrc || echo '. ~/.config/zsh/tmux.zsh' >> ~/.zshrc
+
+if available fzf
+then
+  curl -sSL https://raw.githubusercontent.com/junegunn/fzf/master/bin/fzf-tmux -o ~/.local/bin/fzf-tmux
+  chmod +x ~/.local/bin/fzf-tmux
+fi
