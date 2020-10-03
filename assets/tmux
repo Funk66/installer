@@ -5,7 +5,7 @@ set -g pane-active-border-style fg=black,bg=default
 
 set -g status off
 
-set -g default-terminal ${TERM:-"tmux-256color"}
+set -g default-terminal ${TERM}
 # set -as terminal-features ",gnome*:RGB"  <-- Tmux 3.2
 set -as terminal-overrides ",gnome*:Tc"
 
