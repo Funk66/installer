@@ -5,13 +5,13 @@ set -x
 install() {
   if [ ! -e "$SCRIPTS"/"$1" ]
   then
-    get "$INSTALLER/$1" "$SCRIPTS/$1"
-    . "$SCRIPTS"/"$1"
+    get "$INSTALLER/$1" "$SCRIPTS/$1" || get "common/$1" "$SCRIPTS/$1"
+    . "$SCRIPTS/$1"
   fi
 }
 
 get() {
-  curl -sS "https://raw.githubusercontent.com/Funk66/installer/master/$1" -o "$2" --create-dirs
+  curl -sfS "https://raw.githubusercontent.com/Funk66/installer/master/$1" -o "$2" --create-dirs 2> /dev/null
 }
 
 available() {

@@ -2,7 +2,7 @@
 
 install zsh
 
-sudo apt install -y tmux
+sudo $INSTALLER install -y tmux
 get assets/tmux ~/.config/tmux
 get assets/zsh/tmux.zsh ~/.config/zsh/tmux.zsh
 grep '. ~/.config/zsh/tmux.zsh' ~/.zshrc || sed -i '36i. ~/.config/zsh/tmux.zsh\n' ~/.zshrc

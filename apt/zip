@@ -1,3 +1,0 @@
-#!/bin/sh
-
-available zip || sudo apt install -y zip

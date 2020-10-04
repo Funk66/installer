@@ -1,0 +1,3 @@
+#!/bin/sh
+
+available zip || sudo $INSTALLER install -y zip

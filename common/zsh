@@ -3,7 +3,7 @@
 install git
 install fonts
 
-sudo apt install -y zsh
+sudo $INSTALLER install -y zsh
 mkdir -p ~/.local/zsh
 get assets/zshrc ~/.zshrc
 get assets/zsh/p10k.zsh ~/.config/zsh/p10k.zsh

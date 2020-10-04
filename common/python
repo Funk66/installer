@@ -1,6 +1,6 @@
 #!/bin/sh
 
-sudo apt install -y python3-pip
+sudo $INSTALLER install -y python3-pip
 pip3 install --user --upgrade IPython
 if [ -f ~/.zshrc ]
 then
