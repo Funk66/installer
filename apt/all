@@ -1,8 +1,8 @@
 #!/bin/sh
 
-install zsh
 install tmux
 install python
 install npm
 install fzf
 install vim
+install env

@@ -1,6 +1,6 @@
 #!/bin/sh
 
-set -ex
+set -x
 
 install() {
   if [ ! -e "$SCRIPTS"/"$1" ]
@@ -18,6 +18,10 @@ available() {
   command -v "$1" > /dev/null 2>&1
 }
 
+sudo() {
+  ${SUDO}$@
+}
+
 for INSTALLER in apt dnf pacman
 do
   available $INSTALLER && break
@@ -29,6 +33,8 @@ then
   exit 1
 fi
 
+CONTAINER=$(grep -q docker /proc/self/cgroup && echo "true")
+SUDO=$(which sudo)
 SCRIPTS=$(mktemp -d)
 
 while [ $# -gt 0 ]
