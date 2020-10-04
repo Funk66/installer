@@ -16,6 +16,6 @@ then
 else
   sudo ln -s "$(command -v nvim)" /usr/bin/vim
 fi
-vim +PlugInstall +qa
+vim +PlugInstall +UpdateRemotePlugins +qa
 available pip3 && pip3 install --upgrade --user flake8 mypy black jedi pynvim
 available npm && sudo npm i -g eslint tslint stylelint neovim

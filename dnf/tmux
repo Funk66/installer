@@ -1,5 +1,0 @@
-#!/bin/sh
-
-install zsh
-sudo dnf install -q -y tmux
-# Download config

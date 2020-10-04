@@ -1,0 +1,5 @@
+#!/bin/sh
+
+sudo dnf install -y util-linux-user
+get "common/zsh" "$SCRIPTS/zsh"
+. "$SCRIPTS/zsh"
