@@ -1,6 +1,6 @@
 #!/bin/sh
 
-install zsh
+setup zsh
 
 sudo $INSTALLER install -y tmux
 get assets/tmux ~/.config/tmux

@@ -1,8 +1,8 @@
 #!/bin/sh
 
-install tmux
-install python
-install npm
-install fzf
-install vim
-install env
+setup tmux
+setup python
+setup npm
+setup fzf
+setup vim
+setup env

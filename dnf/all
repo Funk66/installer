@@ -1,3 +1,8 @@
 #!/bin/sh
 
-prepare tmux
+setup tmux
+setup python
+setup npm
+setup fzf
+setup vim
+setup env

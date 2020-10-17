@@ -5,7 +5,7 @@ set -ex
 SUDO="$(command -v sudo) "
 CONTAINER=$(grep -q docker /proc/self/cgroup && echo "true" || true)
 
-install() {
+setup() {  # rename to setup
   if [ ! -e "$SCRIPTS"/"$1" ]
   then
     get "$INSTALLER/$1" "$SCRIPTS/$1" || get "common/$1" "$SCRIPTS/$1"
@@ -40,7 +40,7 @@ SCRIPTS=$(mktemp -d)
 
 while [ $# -gt 0 ]
 do
-  install "$1"
+  setup "$1"
   shift 1
 done
 

@@ -2,7 +2,7 @@
 
 [ -n "$CONTAINER" ] || ls ~/.local/share/fonts/JetBrains* > /dev/null 2>&1 && return
 
-install zip
+setup zip
 
 NERDFONT=$(mktemp)
 curl -L --progress-bar https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/JetBrainsMono.zip -o "$NERDFONT"
