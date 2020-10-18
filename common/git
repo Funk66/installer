@@ -1,5 +1,5 @@
 #!/bin/sh
 
-sudo $INSTALLER install -y git
+install git
 get assets/gitignore ~/.gitignore_global
 get assets/gitconfig ~/.gitconfig

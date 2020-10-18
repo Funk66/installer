@@ -3,7 +3,7 @@
 setup git
 setup fonts
 
-sudo $INSTALLER install -y zsh
+install zsh
 mkdir -p ~/.local/zsh
 get assets/zshrc ~/.zshrc
 get assets/zsh/p10k.zsh ~/.config/zsh/p10k.zsh
@@ -11,5 +11,5 @@ get assets/zsh/p10k.zsh ~/.config/zsh/p10k.zsh
 sudo chsh -s "$(command -v zsh)" "$USER"
 if available fzf && ! available fzf-tmux
 then
-  install fzf
+  setup fzf
 fi

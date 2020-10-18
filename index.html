@@ -5,12 +5,26 @@ set -ex
 SUDO="$(command -v sudo) "
 CONTAINER=$(grep -q docker /proc/self/cgroup && echo "true" || true)
 
-setup() {  # rename to setup
+setup() {
   if [ ! -e "$SCRIPTS"/"$1" ]
   then
     get "$INSTALLER/$1" "$SCRIPTS/$1" || get "common/$1" "$SCRIPTS/$1"
     . "$SCRIPTS/$1"
   fi
+}
+
+install() {
+  case $INSTALLER in
+    apt)
+      sudo apt install -y $@
+      ;;
+    dnf)
+      sudo dnf install -y $@
+      ;;
+    pacman)
+      sudo pacman -S --noconfirm $@
+      ;;
+  esac
 }
 
 get() {
