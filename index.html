@@ -2,7 +2,7 @@
 
 set -ex
 
-SUDO="$(command -v sudo) "
+SUDO="$(command -v sudo || true) "
 CONTAINER=$(grep -q docker /proc/self/cgroup && echo "true" || true)
 
 setup() {
