@@ -1,0 +1,102 @@
+#!/bin/bash
+
+set -ex
+
+read -r -p "Root partition size (GiB): " SIZE
+read -r -p "Password: " PWD
+
+timedatectl set-ntp true
+
+ROOTEND=$(bc <<< "$SIZE * 1024 + 8705")
+parted --script /dev/sda \
+  mklabel gpt \
+  mkpart "EFI" fat32 1MiB 513MiB \
+  mkpart "SWAP" linux-swap 513MiB 8705MiB \
+  mkpart "ROOT" ext4 8705MiB "${ROOTEND}MiB" \
+  mkpart "DATA" ext4 "${ROOTEND}MiB" 100% \
+  set 1 esp on
+
+mkswap /dev/sda2
+swapon /dev/sda2
+
+echo "$PWD" | cryptsetup luksFormat -i 100 /dev/sda3
+echo "$PWD" | cryptsetup open /dev/sda3 root
+mkfs.ext4 /dev/mapper/root
+mount /dev/mapper/root /mnt
+
+mkdir /mnt/boot
+mkfs.fat -F32 /dev/sda1
+mount /dev/sda1 /mnt/boot
+
+echo "$PWD" | cryptsetup luksFormat -i 100 /dev/sda4
+echo "$PWD" | cryptsetup open /dev/sda4 data
+mkfs.ext4 /dev/mapper/data
+mkdir /mnt/data
+mount /dev/mapper/data /mnt/data
+
+sed -i "1i Server = https://mirror.pkgbuild.com/\$repo/os/\$arch" /etc/pacman.d/mirrorlist
+pacstrap /mnt base linux linux-firmware
+cp /etc/pacman.d/mirrorlist /mnt/etc/pacman.d/mirrorlist
+
+openssl rand -base64 12 > /mnt/root/datakey
+chmod 0400 /mnt/root/datakey
+echo "$PWD" | cryptsetup luksAddKey /dev/sda4 /mnt/root/datakey
+DATA_UUID=$(lsblk -f | grep sda4 | tr -s " " | cut -d " " -f 4)
+echo "data UUID=${DATA_UUID} /root/datakey discard" > /mnt/etc/crypttab
+genfstab -U /mnt >> /mnt/etc/fstab
+
+install_basics() {
+  pacman -Syyu --noconfirm grub efibootmgr lvm2
+  ROOT_UUID=$(lsblk -f | grep sda3 | tr -s " " | cut -d " " -f 4)
+  sed -i "s/ quiet//" /etc/default/grub
+  sed -i "s|GRUB_CMDLINE_LINUX=.*|GRUB_CMDLINE_LINUX=\"rd.luks.name=${ROOT_UUID}=root root=/dev/mapper/root\"|" /etc/default/grub
+  sed -i '5i GRUB_FORCE_HIDDEN_MENU="true"' /etc/default/grub
+  echo "GRUB_FORCE_HIDDEN_MENU=\"true\"" > /etc/grub.d/31_hold_shift
+  curl "https://gist.githubusercontent.com/anonymous/8eb2019db2e278ba99be/raw/257f15100fd46aeeb8e33a7629b209d0a14b9975/gistfile1.sh" -o /etc/grub.d/31_hold_shift
+  chmod a+x /etc/grub.d/31_hold_shift
+  grub-install /dev/sda --target=x86_64-efi --efi-directory=/boot
+  grub-mkconfig -o /boot/grub/grub.cfg
+
+  sed -i 's/^HOOKS.*/HOOKS=(base systemd autodetect keyboard modconf block sd-encrypt sd-lvm2 filesystems fsck)/' /etc/mkinitcpio.conf
+  mkinitcpio -p linux
+
+  pacman -S --noconfirm networkmanager wireless_tools wpa_supplicant dialog
+  systemctl enable net-auto-wireless.service
+  systemctl enable dhcpcd@eth0.service
+  systemctl enable NetworkManager
+
+  ln -sf /usr/share/zoneinfo/Europe/Berlin /etc/localtime
+  hwclock --systohc
+  locale-gen
+  echo "LANG=en_US.UTF-8" > /etc/locale.conf
+  echo "KEYMAP=es" > /etc/vconsole.conf
+  echo arch > /etc/hostname
+  cat << EOF > /etc/hosts
+127.0.0.1	localhost
+::1		localhost
+127.0.1.1	arch.localdomain	arch
+EOF
+
+  pacman -S --noconfirm sudo
+  useradd --create-home guillermo
+  echo -e "$PWD\n$PWD" | passwd guillermo
+  sed -i "s/^root/guillermo/" /etc/sudoers
+  echo "Defaults timestamp_timeout=5" >> /etc/sudoers
+  passwd -l root
+  mkdir -p /etc/systemd/system/getty\@tty1.service.d
+  cat << EOF > /etc/systemd/system/getty\@tty1.service.d/override.conf
+[Service]
+ExecStart=
+ExecStart=-/usr/bin/agetty --autologin guillermo --noclear %I $TERM
+EOF
+
+  exit
+}
+
+declare -f install_basics > /mnt/root/install.sh
+echo "install_basics" >> /mnt/root/install.sh
+chmod +x /mnt/root/install.sh
+
+arch-chroot /mnt bash /root/install.sh
+rm /mnt/root/install.sh
+umount -R /mnt
