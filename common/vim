@@ -3,9 +3,11 @@
 setup git
 setup fonts
 
+available python || available python3 || setup python
 install neovim
 [ -d ~/.config/nvim ] || git clone --depth=1 https://github.com/Funk66/vim.git ~/.config/nvim
 curl -sSL https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim -o ~/.config/nvim/autoload/plug.vim --create-dirs
+
 if [ -f /usr/bin/vim ]
 then
   if [ ! -f ~/.local/bin/vim ]
@@ -16,6 +18,12 @@ then
 else
   sudo ln -s "$(command -v nvim)" /usr/bin/vim
 fi
-vim +PlugInstall +UpdateRemotePlugins +qa
-available pip3 && pip3 install --upgrade --user flake8 mypy black jedi pynvim msgpack
+
+pip3 install --upgrade --user flake8 mypy black jedi pynvim msgpack
 available npm && sudo npm i -g eslint tslint stylelint neovim
+nvim +PlugInstall +UpdateRemotePlugins +qa
+
+if [ -f ~/.zshrc ]
+then
+  sed -i 's/EDITOR=vi/EDITOR=nvim/' ~/.zshrc
+fi

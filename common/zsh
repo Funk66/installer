@@ -3,13 +3,19 @@
 setup git
 setup fonts
 
-install zsh
+available zsh || install zsh
 mkdir -p ~/.local/zsh
 get assets/zshrc ~/.zshrc
 get assets/zsh/p10k.zsh ~/.config/zsh/p10k.zsh
 [ -d ~/.config/zsh/p10k ] || git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/.config/zsh/p10k
 sudo chsh -s "$(command -v zsh)" "$USER"
+
 if available fzf && ! available fzf-tmux
 then
   setup fzf
+fi
+
+if available nvim
+then
+  sed -i 's/EDITOR=vi/EDITOR=nvim/' ~/.zshrc
 fi
