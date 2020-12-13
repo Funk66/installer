@@ -49,8 +49,8 @@ install_basics() {
   pacman -Syyu --noconfirm grub efibootmgr lvm2
   ROOT_UUID=$(lsblk -f | grep sda3 | tr -s " " | cut -d " " -f 4)
   sed -i "/^GRUB_CMDLINE_LINUX_DEFAULT/s/ quiet//" /etc/default/grub
-  sed -i "s/^(GRUB_TIMEOUT)/\1=1/" /etc/default/grub
-  sed -i "s|^(GRUB_CMDLINE_LINUX)=.*|\1=\"rd.luks.name=${ROOT_UUID}=root root=/dev/mapper/root\"|" /etc/default/grub
+  sed -i "s/^\(GRUB_TIMEOUT\)=.*/\1=1/" /etc/default/grub
+  sed -i "s|^\(GRUB_CMDLINE_LINUX\)=.*|\1=\"rd.luks.name=${ROOT_UUID}=root root=/dev/mapper/root\"|" /etc/default/grub
   grub-install /dev/sda --target=x86_64-efi --efi-directory=/boot
   grub-mkconfig -o /boot/grub/grub.cfg
 
@@ -76,9 +76,11 @@ EOF
 
   pacman -S --noconfirm sudo zsh
   useradd --create-home guillermo --shell /usr/bin/zsh
+  touch /home/guillermo/.zshrc
+  rm /home/guillermo/.bash*
   echo -e "$PWD\n$PWD" | passwd guillermo
   sed -i "s/^root/guillermo/" /etc/sudoers
-  echo "Defaults timestamp_timeout=5" >> /etc/sudoers
+  sed -i "80i Defaults timestamp_timeout=5" /etc/sudoers
   passwd -l root
   mkdir -p /etc/systemd/system/getty\@tty1.service.d
   cat << EOF > /etc/systemd/system/getty\@tty1.service.d/override.conf
