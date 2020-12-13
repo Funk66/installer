@@ -48,12 +48,9 @@ genfstab -U /mnt >> /mnt/etc/fstab
 install_basics() {
   pacman -Syyu --noconfirm grub efibootmgr lvm2
   ROOT_UUID=$(lsblk -f | grep sda3 | tr -s " " | cut -d " " -f 4)
-  sed -i "s/ quiet//" /etc/default/grub
-  sed -i "s|GRUB_CMDLINE_LINUX=.*|GRUB_CMDLINE_LINUX=\"rd.luks.name=${ROOT_UUID}=root root=/dev/mapper/root\"|" /etc/default/grub
-  sed -i '5i GRUB_FORCE_HIDDEN_MENU="true"' /etc/default/grub
-  echo "GRUB_FORCE_HIDDEN_MENU=\"true\"" > /etc/grub.d/31_hold_shift
-  curl "https://gist.githubusercontent.com/anonymous/8eb2019db2e278ba99be/raw/257f15100fd46aeeb8e33a7629b209d0a14b9975/gistfile1.sh" -o /etc/grub.d/31_hold_shift
-  chmod a+x /etc/grub.d/31_hold_shift
+  sed -i "/^GRUB_CMDLINE_LINUX_DEFAULT/s/ quiet//" /etc/default/grub
+  sed -i "s/^(GRUB_TIMEOUT)/\1=1/" /etc/default/grub
+  sed -i "s|^(GRUB_CMDLINE_LINUX)=.*|\1=\"rd.luks.name=${ROOT_UUID}=root root=/dev/mapper/root\"|" /etc/default/grub
   grub-install /dev/sda --target=x86_64-efi --efi-directory=/boot
   grub-mkconfig -o /boot/grub/grub.cfg
 
@@ -88,6 +85,17 @@ EOF
 [Service]
 ExecStart=
 ExecStart=-/usr/bin/agetty --autologin guillermo --noclear %I $TERM
+EOF
+
+  sed -i '/^#en_\(GB\|US\).UTF-8/s/^#//' /etc/locale.gen
+  locale-gen
+  cat << EOF > /etc/locale.conf
+LANG=en_US.UTF-8
+LC_NUMERIC=en_GB.UTF-8
+LC_TIME=en_GB.UTF-8
+LC_MONETARY=en_GB.UTF-8
+LC_PAPER=en_GB.UTF-8
+LC_MEASUREMENT=en_GB.UTF-8
 EOF
 
   exit
