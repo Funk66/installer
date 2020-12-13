@@ -74,8 +74,8 @@ install_basics() {
 127.0.1.1	arch.localdomain	arch
 EOF
 
-  pacman -S --noconfirm sudo
-  useradd --create-home guillermo
+  pacman -S --noconfirm sudo zsh
+  useradd --create-home guillermo --shell /usr/bin/zsh
   echo -e "$PWD\n$PWD" | passwd guillermo
   sed -i "s/^root/guillermo/" /etc/sudoers
   echo "Defaults timestamp_timeout=5" >> /etc/sudoers
