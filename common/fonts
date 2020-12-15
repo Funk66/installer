@@ -9,6 +9,7 @@ NERDFONT=$(mktemp)
 curl -L --progress-bar https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/JetBrainsMono.zip -o "$NERDFONT"
 mkdir -p .local/share/fonts
 unzip -o -q "$NERDFONT" -d ~/.local/share/fonts
+get assets/fontconfig/local.conf /etc/fonts/local.conf
 fc-cache -f ~/.local/share/fonts
 rm "$NERDFONT"
 PROFILE=$(gsettings get org.gnome.Terminal.ProfilesList default | tr -d "'")
