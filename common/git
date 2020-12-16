@@ -1,5 +1,5 @@
 #!/bin/sh
 
-install git
+available git || install git
 get assets/gitignore ~/.gitignore_global
 get assets/gitconfig ~/.gitconfig

@@ -9,6 +9,7 @@ setup() {
   if [ ! -e "$SCRIPTS"/"$1" ]
   then
     get "$INSTALLER/$1" "$SCRIPTS/$1" || get "common/$1" "$SCRIPTS/$1"
+    test ! -f "$SCRIPTS/$1" && echo "❌ Package not available: ${S1}" && exit 1
     . "$SCRIPTS/$1"
   fi
 }
@@ -59,4 +60,4 @@ do
 done
 
 rm -r "$SCRIPTS"
-echo "Done"
+echo "✅ Done"
