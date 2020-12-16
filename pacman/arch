@@ -3,7 +3,7 @@
 set -ex
 
 read -r -p "Root partition size (GiB): " SIZE
-read -r -p "Password: " PWD
+read -r -p "Password: " PSWD
 
 timedatectl set-ntp true
 
@@ -19,8 +19,8 @@ parted --script /dev/sda \
 mkswap /dev/sda2
 swapon /dev/sda2
 
-echo "$PWD" | cryptsetup luksFormat -i 100 /dev/sda3
-echo "$PWD" | cryptsetup open /dev/sda3 root
+echo "$PSWD" | cryptsetup luksFormat -i 100 /dev/sda3
+echo "$PSWD" | cryptsetup open /dev/sda3 root
 mkfs.ext4 /dev/mapper/root
 mount /dev/mapper/root /mnt
 
@@ -28,8 +28,8 @@ mkdir /mnt/boot
 mkfs.fat -F32 /dev/sda1
 mount /dev/sda1 /mnt/boot
 
-echo "$PWD" | cryptsetup luksFormat -i 100 /dev/sda4
-echo "$PWD" | cryptsetup open /dev/sda4 data
+echo "$PSWD" | cryptsetup luksFormat -i 100 /dev/sda4
+echo "$PSWD" | cryptsetup open /dev/sda4 data
 mkfs.ext4 /dev/mapper/data
 mkdir /mnt/data
 mount /dev/mapper/data /mnt/data
@@ -40,7 +40,7 @@ cp /etc/pacman.d/mirrorlist /mnt/etc/pacman.d/mirrorlist
 
 openssl rand -base64 12 > /mnt/root/datakey
 chmod 0400 /mnt/root/datakey
-echo "$PWD" | cryptsetup luksAddKey /dev/sda4 /mnt/root/datakey
+echo "$PSWD" | cryptsetup luksAddKey /dev/sda4 /mnt/root/datakey
 DATA_UUID=$(lsblk -f | grep sda4 | tr -s " " | cut -d " " -f 4)
 echo "data UUID=${DATA_UUID} /root/datakey discard" > /mnt/etc/crypttab
 genfstab -U /mnt >> /mnt/etc/fstab
@@ -76,7 +76,7 @@ EOF
 
   useradd --create-home guillermo
   pacman -S --noconfirm sudo
-  echo -e "$PWD\n$PWD" | passwd guillermo
+  echo -e "$1\n$1" | passwd guillermo
   sed -i "s/^root/guillermo/" /etc/sudoers
   sed -i "80i Defaults timestamp_timeout=5" /etc/sudoers
   passwd -l root
@@ -102,9 +102,8 @@ EOF
 }
 
 declare -f install_basics > /mnt/root/install.sh
-echo "install_basics" >> /mnt/root/install.sh
+echo "install_basics $PSWD" >> /mnt/root/install.sh
 chmod +x /mnt/root/install.sh
 
 arch-chroot /mnt bash /root/install.sh
-rm /mnt/root/install.sh
 umount -R /mnt
