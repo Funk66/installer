@@ -1,17 +1,18 @@
 #!/bin/sh
 
-[ -n "$CONTAINER" ] || ls ~/.local/share/fonts/JetBrains* > /dev/null 2>&1 && return
+[ -n "$CONTAINER" ] || ls /usr/share/fonts/nerdfonts > /dev/null 2>&1 && return
 
 setup zip
 
 available fc-cache || install fontconfig
 NERDFONT=$(mktemp)
 curl -L --progress-bar https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/JetBrainsMono.zip -o "$NERDFONT"
-mkdir -p /usr/share/fonts/nerdfonts
-unzip -o -q "$NERDFONT" -d /usr/share/fonts/nerdfonts
-get assets/fontconfig/local.conf /etc/fonts/local.conf
+sudo mkdir -p /usr/share/fonts/nerdfonts
+sudo unzip -o -q "$NERDFONT" -d /usr/share/fonts/nerdfonts
+get assets/fontconfig/local.conf local.conf
+sudo mv local.conf /etc/fonts/local.conf
 fc-cache -vf /usr/share/fonts/nerdfonts
-rm "$NERDFONT"
+sudo rm -f "$NERDFONT" /usr/share/fonts/nerdfonts/*Windows*
 
 if available gnome-terminal
 then
