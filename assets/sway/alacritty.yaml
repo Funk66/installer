@@ -1,0 +1,5 @@
+env:
+  TERM: alacritty
+colors:
+  primary:
+    background: '0x000000'

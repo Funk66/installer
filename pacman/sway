@@ -1,12 +1,15 @@
 #!/bin/sh
 
-install noto-fonts mesa sway swaylock swayidle bemenu alacritty mako kanshi playerctl brightnessctl
+install noto-fonts mesa sway swaylock swayidle bemenu alacritty mako kanshi playerctl brightnessctl wc-clipboard waybar imv grim slurp
 
 cat << EOF > .zshenv
-if [[ -z $DISPLAY ]] && [[ $(tty) = /dev/tty1 ]]; then
+if [[ -z \$DISPLAY ]] && [[ \$(tty) = /dev/tty1 ]]; then
   XKB_DEFAULT_LAYOUT=es exec sway
 fi
 EOF
 
-get assets/sway/mako.conf ~/.config/mako/config
-get assets/sway/kanshi.conf ~/.config/kanshi/config
+get assets/sway/alacritty.yml ~/.config/alacritty/alacritty.yml
+for pkg in sway mako kanshi
+do
+  get assets/sway/"${pkg}".conf ~/.config/"${pkg}"/config
+done

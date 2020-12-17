@@ -25,5 +25,5 @@ nvim +PlugInstall +UpdateRemotePlugins +qa
 
 if [ -f ~/.zshrc ]
 then
-  sed -i 's/EDITOR=vi/EDITOR=nvim/' ~/.zshrc
+  sed -i "s/EDITOR='vi'/EDITOR='nvim'/" ~/.zshrc
 fi
