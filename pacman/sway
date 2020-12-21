@@ -1,9 +1,11 @@
 #!/bin/sh
 
-install noto-fonts mesa sway swaylock swayidle bemenu alacritty mako kanshi playerctl brightnessctl wl-clipboard waybar imv grim slurp
+install noto-fonts mesa sway swaylock swayidle bemenu alacritty mako kanshi playerctl brightnessctl wl-clipboard waybar grim slurp
 sudo pip install autotiling
 
 cat << EOF > .zshenv
+GDK_BACKEND=wayland
+
 if [[ -z \$DISPLAY ]] && [[ \$(tty) = /dev/tty1 ]]; then
   XKB_DEFAULT_LAYOUT=es exec sway
 fi

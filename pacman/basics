@@ -1,4 +1,4 @@
 #!/bin/sh
 
-install p7zip p7zip-plugins unrar tar rsync libreoffice evince firefox imagemagick
-sed -i '1i GDK_BACKEND=wayland' ~/.zshenv
+install base-devel p7zip p7zip-plugins unrar tar rsync libreoffice evince firefox imagemagick imv
+setup tools
