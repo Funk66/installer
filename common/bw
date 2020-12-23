@@ -1,0 +1,6 @@
+#!/bin/sh
+
+install npm
+
+sudo npm install --global @bitwarden/cli
+bw login
