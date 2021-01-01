@@ -15,6 +15,7 @@ setup() {
 }
 
 install() {
+  # TODO: check if each pkg is available and build list of pending installs
   case $INSTALLER in
     apt)
       sudo apt install -y $@

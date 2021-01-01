@@ -1,4 +1,9 @@
 #!/bin/sh
 
-install base-devel p7zip p7zip-plugins unrar tar rsync libreoffice evince firefox imagemagick imv
+install --needed base-devel p7zip p7zip-plugins unrar tar rsync libreoffice evince firefox imagemagick imv
 setup tools
+
+install python-gobject
+sudo pip install spotPRIS2
+curl github -o spotpris2.service
+install -D 644 spotpris2.service /usr/lib/systemd/user/spotpris2.service

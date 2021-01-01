@@ -5,6 +5,7 @@ sudo pip install autotiling
 
 cat << EOF > .zshenv
 GDK_BACKEND=wayland
+MOZ_ENABLE_WAYLAND=1
 
 if [[ -z \$DISPLAY ]] && [[ \$(tty) = /dev/tty1 ]]; then
   XKB_DEFAULT_LAYOUT=es exec sway

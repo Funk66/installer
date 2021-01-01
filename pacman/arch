@@ -2,6 +2,8 @@
 
 set -ex
 
+efibootmgr  # check if the machine supports EFI variables
+
 read -r -p "Root partition size (GiB): " SIZE
 read -r -p "Password: " PSWD
 
