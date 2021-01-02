@@ -10,7 +10,13 @@ gpg --export-ssh-key gga@kialo.com > ~/.ssh/id_card.pub
 chmod 0600 ~/.ssh/id_card.pub
 echo "enable-ssh-support" > ~/.gnupg/gpg-agent.conf
 get assets/zsh/gpg.zsh ~/.config/zsh/gpg.zsh
-echo ". ~/.config/zsh/gpg" >> ~/.zshrc
+echo ". ~/.config/zsh/gpg.zsh" >> ~/.zshrc
+grep 'Host kialo' ~/.ssh/config || cat << EOF >> ~/.ssh/config
+Host kialo
+  Hostname github.com
+  IdentityFile ~/.ssh/id_card.pub
+  IdentitiesOnly yes
+EOF
 
 install yubikey-manager
 sudo systemctl start pcscd.service
