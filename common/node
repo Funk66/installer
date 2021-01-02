@@ -1,0 +1,3 @@
+#!/bin/sh
+
+available node || install nodejs npm

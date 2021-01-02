@@ -1,6 +1,6 @@
 #!/bin/sh
 
-install --needed base-devel p7zip p7zip-plugins unrar tar rsync libreoffice evince firefox imagemagick imv
+install libreoffice evince firefox imv
 setup tools
 
 install python-gobject

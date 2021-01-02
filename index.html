@@ -24,7 +24,7 @@ install() {
       sudo dnf install -y $@
       ;;
     pacman)
-      sudo pacman -S --noconfirm $@
+      sudo pacman -S --needed --noconfirm $@
       ;;
   esac
 }

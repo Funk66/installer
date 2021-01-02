@@ -2,7 +2,7 @@
 
 [ -n "$CONTAINER" ] || ls /usr/share/fonts/nerdfonts > /dev/null 2>&1 && return
 
-setup zip
+install zip unzip
 
 available fc-cache || install fontconfig
 NERDFONT=$(mktemp)
