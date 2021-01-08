@@ -2,8 +2,7 @@
 
 available bw && return
 
-setup node
-setup tools
+setup node tools
 
 sudo npm install --global @bitwarden/cli
 bw login

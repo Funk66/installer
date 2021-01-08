@@ -1,7 +1,6 @@
 #!/bin/sh
 
-setup git
-setup fonts
+setup git fonts
 
 available zsh || install zsh
 mkdir -p ~/.local/zsh

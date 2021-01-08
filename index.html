@@ -6,12 +6,15 @@ SUDO="$(command -v sudo || true) "
 CONTAINER=$(grep -q docker /proc/self/cgroup && echo "true" || true)
 
 setup() {
-  if [ ! -e "$SCRIPTS"/"$1" ]
-  then
-    get "$INSTALLER/$1" "$SCRIPTS/$1" || get "common/$1" "$SCRIPTS/$1"
-    test ! -f "$SCRIPTS/$1" && echo "❌ Package not available: ${S1}" && exit 1
-    . "$SCRIPTS/$1"
-  fi
+  for PKG in $@
+  do
+    if [ ! -e "$SCRIPTS"/"$PKG" ]
+    then
+      get "$INSTALLER/$PKG" "$SCRIPTS/$PKG" || get "common/$PKG" "$SCRIPTS/$PKG"
+      test ! -f "$SCRIPTS/$PKG" && echo "❌ Package not available: ${PKG}" && exit 1
+      . "$SCRIPTS/$PKG"
+    fi
+  done
 }
 
 install() {
@@ -66,5 +69,4 @@ do
 done
 
 rm -r "$SCRIPTS"
-unset BW_SESSION
 echo "✅ Done"
