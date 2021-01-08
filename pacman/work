@@ -16,6 +16,7 @@ chmod 0600 ~/.ssh/id_card.pub
 echo "enable-ssh-support" > ~/.gnupg/gpg-agent.conf
 get assets/zsh/gpg.zsh ~/.config/zsh/gpg.zsh
 echo ". ~/.config/zsh/gpg.zsh" >> ~/.zshrc
+. ~/.config/zsh/gpg.zsh
 touch ~/.ssh/config
 grep 'Host kialo' ~/.ssh/config > /dev/null 2>&1 || cat << EOF >> ~/.ssh/config
 Host kialo
@@ -23,3 +24,8 @@ Host kialo
   IdentityFile ~/.ssh/id_card.pub
   IdentitiesOnly yes
 EOF
+
+install gopass
+git clone git@github.com:gga-kialo/secrets.git ~/.local/share/gopass/stores/root
+git clone git@github.com:kialo/secrets.git ~/.local/share/gopass/stores/kialo
+get assets/gopass.yml ~/.config/gopass/config.yml

@@ -1,0 +1,12 @@
+autoclip: false
+autoimport: true
+cliptimeout: 45
+exportkeys: true
+mime: true
+nocolor: false
+nopager: false
+notifications: true
+safecontent: false
+path: /home/guillermo/.local/share/gopass/stores/root
+mounts:
+  kialo: /home/guillermo/.local/share/gopass/stores/kialo
