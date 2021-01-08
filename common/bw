@@ -1,9 +1,9 @@
 #!/bin/sh
 
-setup node
+available bw && return
 
-if ! available bw
-then
-  sudo npm install --global @bitwarden/cli
-  bw login
-fi
+setup node
+setup tools
+
+sudo npm install --global @bitwarden/cli
+bw login

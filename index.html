@@ -41,6 +41,11 @@ sudo() {
   ${SUDO}$@
 }
 
+bwget() {
+  [ -z "$BW_SESSION" ] && export BW_SESSION=$(bw unlock --raw)
+  bw get item "$1" | jq -r ".notes"
+}
+
 for INSTALLER in apt dnf pacman
 do
   available $INSTALLER && break
@@ -61,4 +66,5 @@ do
 done
 
 rm -r "$SCRIPTS"
+unset BW_SESSION
 echo "✅ Done"

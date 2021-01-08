@@ -9,7 +9,7 @@ sudo systemctl enable pcscd.service
 gpg --card-status || (echo "Cannot detect Yubikey" && exit 1)
 
 mkdir -p ~/.ssh
-bw get item "fb21d443-4f27-4812-a404-aca401096867" | jq -r ".notes" | gpg --import
+bwget "fb21d443-4f27-4812-a404-aca401096867" | gpg --import
 echo "0E5F27342AF9AFB6FCE9504635AB7E86500DD327:6" | gpg --import-ownertrust
 gpg --export-ssh-key gga@kialo.com > ~/.ssh/id_card.pub
 chmod 0600 ~/.ssh/id_card.pub
