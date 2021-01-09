@@ -1,0 +1,10 @@
+#!/bin/bash
+
+available yay && return
+
+setup tools
+setup go
+
+YAYDIR=$(mktemp -d)
+git clone --depth 1 https://aur.archlinux.org/yay.git "$YAYDIR"
+(cd "$YAYDIR" && makepkg -si)
