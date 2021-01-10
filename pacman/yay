@@ -2,8 +2,7 @@
 
 available yay && return
 
-setup tools
-setup go
+setup tools go
 
 YAYDIR=$(mktemp -d)
 git clone --depth 1 https://aur.archlinux.org/yay.git "$YAYDIR"

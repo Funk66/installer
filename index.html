@@ -11,7 +11,11 @@ setup() {
     if [ ! -e "$SCRIPTS"/"$PKG" ]
     then
       get "$INSTALLER/$PKG" "$SCRIPTS/$PKG" || get "common/$PKG" "$SCRIPTS/$PKG"
-      test ! -f "$SCRIPTS/$PKG" && echo "❌ Package not available: ${PKG}" && exit 1
+      if [ ! -f "$SCRIPTS/$PKG" ]
+      then
+        echo "❌ Package not available: ${PKG}"
+        exit 1
+      fi
       . "$SCRIPTS/$PKG"
     fi
   done
