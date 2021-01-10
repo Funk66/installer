@@ -1,0 +1,22 @@
+#!/bin/sh
+
+gpg -K ggaguilar || return
+
+mkdir -p ~/.config/gnupg ~/.ssh
+chmod 0700 ~/.config/gnupg
+export GNUPGHOME="$HOME/.config/gnupg"
+sed -i '2i \\nexport GNUPGHOME="~/.config/gnupg"' ~/.zshrc
+get assets/gnupg/gpg-agent.conf ~/.config/gnupg/gpg-agent.conf
+
+gpg --import <(bwget "a060bead-ffdd-4760-a6fa-aca50097b257")
+echo "39905145A381C2119DA34ACDF1A9429A643F4A88:6" | gpg --import-ownertrust
+echo "E72D431E5465ADAE21DEA9C2A87C656828648871" >> ~/.config/gnupg/sshcontrol
+gpg --export-ssh-key 39905145A381C2119DA34ACDF1A9429A643F4A88 > ~/.ssh/id_rsa.pub
+chmod 0600 ~/.ssh/id_rsa.pub
+cat << EOF >> ~/.ssh/config
+Host github.com
+  Hostname github.com
+  IdentityFile ~/.ssh/id_rsa.pub
+  IdentitiesOnly yes
+EOF
+gpg-connect-agent updatestartuptty /bye
