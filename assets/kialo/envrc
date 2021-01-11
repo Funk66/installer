@@ -1,0 +1,6 @@
+#!/bin/bash
+
+export KIALO_ROOT=~/Workspace/kialo
+export PATH="$KIALO_ROOT/development/bin:$PATH"
+. .venv/bin/activate
+unset PS1

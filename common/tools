@@ -1,3 +1,3 @@
 #!/bin/sh
 
-install base-devel man-db man-pages openssh p7zip unrar tar rsync imagemagick bat nnn jq
+install base-devel man-db man-pages openssh p7zip unrar tar wget rsync imagemagick bat nnn jq

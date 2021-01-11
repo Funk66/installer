@@ -6,7 +6,7 @@ install python3-pip || install python-pip
 pip3 install --user --upgrade IPython
 if [ -f ~/.zshrc ]
 then
-  get assets/zsh/python.zsh ~/.config/zsh/python.zsh
-  grep -q '. ~/.config/zsh/python.zsh' ~/.zshrc || echo '. ~/.config/zsh/python.zsh' >> ~/.zshrc
+  sed -i '2i export VIRTUAL_ENV_DISABLE_PROMPT=1' ~/.zshrc
+  sed -i '2i \\nexport PYTHONBREAKPOINT="ipdb.set_trace' ~/.zshrc
 fi
 get assets/flake8 ~/.config/flake8

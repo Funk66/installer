@@ -1,9 +1,5 @@
 #!/bin/sh
 
 install libreoffice evince firefox imv
-setup tools
 
-install python-gobject
-sudo pip install spotPRIS2
-curl github -o spotpris2.service
-install -D 644 spotpris2.service /usr/lib/systemd/user/spotpris2.service
+sed -i '2i \\nexport MOZ_ENABLE_WAYLAND=1' ~/.zshrc

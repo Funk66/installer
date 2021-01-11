@@ -2,7 +2,8 @@
 
 [user]
   name = Guillermo Guirao Aguilar
-  email = contact@guillermoguiraoaguilar.com
+  email = ggaguilar@gmail.com
+  sigingkey = 643F4A88
 [core]
   editor = vim
   excludesfile = ~/.gitignore_global
