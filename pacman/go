@@ -1,0 +1,9 @@
+#!/bin/bash
+
+available go && return
+
+install go go-tools
+
+mkdir -p ~/{.local,Workspace}/go/bin
+sed -i '2i \\nexport GOPATH="$HOME/.local/go:$HOME/Workspace/go"' ~/.zshrc
+sed -i '/^export PATH=/s/=/=$HOME\/.local\/go\/bin' ~/.zshrc
