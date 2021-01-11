@@ -6,4 +6,4 @@ setup tools go
 
 YAYDIR=$(mktemp -d)
 git clone --depth 1 https://aur.archlinux.org/yay.git "$YAYDIR"
-(cd "$YAYDIR" && makepkg -si)
+(cd "$YAYDIR" && makepkg -si --noconfirm)

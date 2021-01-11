@@ -1,0 +1,8 @@
+#!/bin/bash
+
+available direnv && return
+
+setup yay
+
+yay -S --noconfirm direnv
+echo 'eval "$(direnv hook zsh)"' >> ~/.zshrc
