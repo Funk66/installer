@@ -48,6 +48,7 @@ echo "data UUID=${DATA_UUID} /root/datakey discard" > /mnt/etc/crypttab
 genfstab -U /mnt >> /mnt/etc/fstab
 
 install_basics() {
+  sed -i "s/^#Color$/Color/" /etc/pacman.conf
   pacman -Syyu --noconfirm grub efibootmgr lvm2
   ROOT_UUID=$(lsblk -f | grep sda3 | tr -s " " | cut -d " " -f 4)
   sed -i "/^GRUB_CMDLINE_LINUX_DEFAULT/s/ quiet//" /etc/default/grub

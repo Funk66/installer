@@ -6,6 +6,7 @@ available zsh || install zsh
 mkdir -p ~/.local/zsh
 get assets/zshrc ~/.zshrc
 get assets/zsh/p10k.zsh ~/.config/zsh/p10k.zsh
+get assets/zsh/aliases.zsh ~/.config/zsh/aliases.zsh
 [ -d ~/.config/zsh/p10k ] || git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/.config/zsh/p10k
 sudo chsh -s "$(command -v zsh)" "$USER"
 
