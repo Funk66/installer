@@ -7,6 +7,6 @@ pip3 install --user --upgrade IPython
 if [ -f ~/.zshrc ]
 then
   sed -i '2i export VIRTUAL_ENV_DISABLE_PROMPT=1' ~/.zshrc
-  sed -i '2i \\nexport PYTHONBREAKPOINT="ipdb.set_trace' ~/.zshrc
+  sed -i '2i \\nexport PYTHONBREAKPOINT="ipdb.set_trace"' ~/.zshrc
 fi
 get assets/flake8 ~/.config/flake8

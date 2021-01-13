@@ -1,5 +1,4 @@
-tags
 Session.vim
-env
+.aws
 .venv
 .envrc

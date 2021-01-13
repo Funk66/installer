@@ -30,6 +30,7 @@ setopt EXTENDED_GLOB
 bindkey -v
 
 zstyle ':completion:*' special-dirs true
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 autoload -Uz compinit
 compinit
 
