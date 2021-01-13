@@ -2,5 +2,6 @@
 
 export KIALO_ROOT=~/Workspace/kialo
 export PATH="$KIALO_ROOT/development/bin:$PATH"
+export AWS_CONFIG_FILE=$KIALO_ROOT/.aws
 . .venv/bin/activate
 unset PS1

@@ -1,6 +1,6 @@
 #!/bin/sh
 
-setup bw gpg
+setup bw gpg direnv
 
 install yubikey-manager
 sudo systemctl start pcscd.service
@@ -15,15 +15,31 @@ echo "enable-ssh-support" > ~/.config/gnupg/gpg-agent.conf
 get assets/zsh/gpg.zsh ~/.config/zsh/gpg.zsh
 echo ". ~/.config/zsh/gpg.zsh" >> ~/.zshrc
 . ~/.config/zsh/gpg.zsh
-grep 'Host kialohub' ~/.ssh/config > /dev/null 2>&1 || cat << EOF >> ~/.ssh/config
+grep 'Host kialo.github.com' ~/.ssh/config > /dev/null 2>&1 || cat << EOF >> ~/.ssh/config
 
-Host kialohub
+Host kialo.github.com
   Hostname github.com
   IdentityFile ~/.ssh/id_card.pub
   IdentitiesOnly yes
 EOF
 
 install gopass
-git clone git@kialohub:gga-kialo/secrets.git ~/.local/share/gopass/stores/root
-git clone git@kialohub:kialo/secrets.git ~/.local/share/gopass/stores/kialo
+git clone git@kialo.github.com:gga-kialo/secrets.git ~/.local/share/gopass/stores/root
+git clone git@kialo.github.com:kialo/secrets.git ~/.local/share/gopass/stores/kialo
 get assets/gopass.yml ~/.config/gopass/config.yml
+
+export KIALO_ROOT=~/Workspace/kialo
+[ -d $KIALO_ROOT ] && return
+mkdir -p ~/Workspace
+git clone git@kialo.github.com:kialo/kialo.git ~/Workspace/kialo
+cd $KIALO_ROOT
+python -m venv .venv
+bwget assets/kialo/envrc ~/Workspace/kialo/.envrc
+direnv allow
+. $KIALO_ROOT/.envrc
+pip install -r $KIALO_ROOT/backend/requirements-dev.txt
+download-binaries
+
+mkdir -p $KIALO_ROOT/.aws
+sed 's/USERNAME/gga/' $KIALO_ROOT/deveopment/aws/aws_config/profiles > $KIALO_ROOT/.aws/config
+bwget "1cfa3817-fe47-41b9-a7cd-acae01522f82" > $KIALO_ROOT/.aws/credentials
