@@ -1,7 +1,6 @@
 #!/bin/sh
 
 install noto-fonts mesa sway swaylock swayidle bemenu alacritty mako kanshi playerctl brightnessctl wl-clipboard waybar grim slurp
-sudo pip install autotiling
 
 cat << EOF > .zshenv
 if [[ -z \$DISPLAY ]] && [[ \$(tty) = /dev/tty1 ]]; then
