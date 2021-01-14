@@ -6,17 +6,20 @@ SUDO="$(command -v sudo || true) "
 CONTAINER=$(grep -q docker /proc/self/cgroup && echo "true" || true)
 
 setup() {
-  for PKG in $@
+  for PKG in "$@"
   do
-    if [ ! -e "$SCRIPTS"/"$PKG" ]
+    if grep -E " $PKG$" "$INSTALL_LOGS/installed"
     then
+      echo "\033[94mSkipping $PKG - already installed\033[0m"
+    else
       get "$INSTALLER/$PKG" "$SCRIPTS/$PKG" || get "common/$PKG" "$SCRIPTS/$PKG"
       if [ ! -f "$SCRIPTS/$PKG" ]
       then
         echo "❌ Package not available: ${PKG}"
         exit 1
       fi
-      . "$SCRIPTS/$PKG"
+      . "$SCRIPTS/$PKG" 2>> "$INSTALL_LOGS/log"
+      echo "$(date) $PKG" >> "$INSTALL_LOGS/installed"
     fi
   done
 }
@@ -68,16 +71,9 @@ SCRIPTS=$(mktemp -d)
 INSTALL_LOGS=~/.local/funk66
 mkdir -p $INSTALL_LOGS
 touch $INSTALL_LOGS/installed
+rm "$INSTALL_LOGS/log"
 
-while [ $# -gt 0 ]
-do
-  if ! grep -E " $1$" $INSTALL_LOGS/installed
-  then
-    setup "$1" 2>> $INSTALL_LOGS/debug | tee -a $INSTALL_LOGS/log
-    echo "$(date) $1" >> $INSTALL_LOGS/installed
-  fi
-  shift 1
-done
+setup "$@"
 
 rm -r "$SCRIPTS"
 echo "✅ Done"
