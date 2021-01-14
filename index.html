@@ -10,7 +10,7 @@ setup() {
   do
     if grep -E " $PKG$" "$INSTALL_LOGS/installed"
     then
-      echo "\033[94mSkipping $PKG - already installed\033[0m"
+      printf "\033[94mSkipping %s - already installed\033[0m\n" "$PKG"
     else
       get "$INSTALLER/$PKG" "$SCRIPTS/$PKG" || get "common/$PKG" "$SCRIPTS/$PKG"
       if [ ! -f "$SCRIPTS/$PKG" ]
@@ -71,7 +71,7 @@ SCRIPTS=$(mktemp -d)
 INSTALL_LOGS=~/.local/funk66
 mkdir -p $INSTALL_LOGS
 touch $INSTALL_LOGS/installed
-rm "$INSTALL_LOGS/log"
+[ -f "$INSTALL_LOGS/log" ] && rm "$INSTALL_LOGS/log"
 
 setup "$@"
 
