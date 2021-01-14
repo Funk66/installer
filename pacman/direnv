@@ -4,5 +4,6 @@ setup yay
 
 yay -S --noconfirm direnv
 sed -i '2i \\nexport DIRENV_LOG_FORMAT=' ~/.zshrc
-echo 'eval "$(direnv hook zsh)"' >> ~/.zshrc
-eval "$(direnv hook zsh)"
+[ -f ~/.zshrc ] && echo 'eval "$(direnv hook zsh)"' >> ~/.zshrc
+get assets/direnvrc ~/.config/direnv/direnvrc
+eval "$(direnv hook bash)"

@@ -3,4 +3,5 @@
 setup node tools
 
 sudo npm install --global @bitwarden/cli
+printf "\033[92mBitwarden password:\033[0m"
 bw login
