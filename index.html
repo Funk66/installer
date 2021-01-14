@@ -65,12 +65,13 @@ then
 fi
 
 SCRIPTS=$(mktemp -d)
-INSTALL_LOGS="~/.local/funk66"
-mkdir -o $INSTALL_LOGS
+INSTALL_LOGS=~/.local/funk66
+mkdir -p $INSTALL_LOGS
+touch $INSTALL_LOGS/installed
 
 while [ $# -gt 0 ]
 do
-  if grep -vE " $1$" $INSTALL_LOGS/installed
+  if ! grep -E " $1$" $INSTALL_LOGS/installed
   then
     setup "$1" 2>> $INSTALL_LOGS/debug | tee -a $INSTALL_LOGS/log
     echo "$(date) $1" >> $INSTALL_LOGS/installed
