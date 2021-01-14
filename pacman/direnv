@@ -1,7 +1,5 @@
 #!/bin/bash
 
-available direnv && return
-
 setup yay
 
 yay -S --noconfirm direnv

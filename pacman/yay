@@ -1,7 +1,5 @@
 #!/bin/bash
 
-available yay && return
-
 setup tools go
 
 YAYDIR=$(mktemp -d)

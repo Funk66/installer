@@ -1,7 +1,5 @@
 #!/bin/bash
 
-available go && return
-
 install go go-tools
 
 mkdir -p ~/{.local,Workspace}/go/bin

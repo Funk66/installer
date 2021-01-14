@@ -1,7 +1,5 @@
 #!/bin/sh
 
-available bw && return
-
 setup node tools
 
 sudo npm install --global @bitwarden/cli

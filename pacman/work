@@ -29,12 +29,11 @@ git clone git@kialo.github.com:kialo/secrets.git ~/.local/share/gopass/stores/ki
 get assets/gopass.yml ~/.config/gopass/config.yml
 
 export KIALO_ROOT=~/Workspace/kialo
-[ -d $KIALO_ROOT ] && return
 mkdir -p ~/Workspace
-git clone git@kialo.github.com:kialo/kialo.git ~/Workspace/kialo
-cd $KIALO_ROOT
+git clone git@kialo.github.com:kialo/kialo.git $KIALO_ROOT
+cd $KIALO_ROOT || exit
 python -m venv .venv
-bwget assets/kialo/envrc ~/Workspace/kialo/.envrc
+bwget assets/kialo/envrc $KIALO_ROOT/.envrc
 direnv allow
 . $KIALO_ROOT/.envrc
 pip install -r $KIALO_ROOT/backend/requirements-dev.txt

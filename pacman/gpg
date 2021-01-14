@@ -1,7 +1,5 @@
 #!/bin/sh
 
-(gpg -K ggaguilar && return) || true
-
 mkdir -p ~/.config/gnupg ~/.ssh
 chmod 0700 ~/.config/gnupg
 export GNUPGHOME="$HOME/.config/gnupg"
