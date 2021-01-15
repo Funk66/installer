@@ -18,7 +18,7 @@ setup() {
         echo "❌ Package not available: ${PKG}"
         exit 1
       fi
-      . "$SCRIPTS/$PKG" 2>> "$INSTALL_LOGS/log"
+      . "$SCRIPTS/$PKG" 2>&1 | tee -a "$INSTALL_LOGS/log"
       echo "$(date) $PKG" >> "$INSTALL_LOGS/installed"
     fi
   done

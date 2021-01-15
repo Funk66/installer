@@ -28,19 +28,22 @@ git clone git@kialo.github.com:gga-kialo/secrets.git ~/.local/share/gopass/store
 git clone git@kialo.github.com:kialo/secrets.git ~/.local/share/gopass/stores/kialo
 get assets/gopass.yml ~/.config/gopass/config.yml
 
+install pyenv python-snappy
+pyenv install 3.8.7
+
 export KIALO_ROOT=~/Workspace/kialo
 mkdir -p ~/Workspace
 git clone git@kialo.github.com:kialo/kialo.git $KIALO_ROOT
 cd $KIALO_ROOT || exit
-python -m venv .venv
 get assets/kialo/envrc $KIALO_ROOT/.envrc
 direnv allow
-. $KIALO_ROOT/.envrc
+pip install flake8 mypy black jedi pynvim msgpack
 pip install -r $KIALO_ROOT/backend/requirements-dev.txt
 download-binaries
 
 mkdir -p $KIALO_ROOT/.aws
 sed 's/USERNAME/gga/' $KIALO_ROOT/deveopment/aws/aws_config/profiles > $KIALO_ROOT/.aws/config
 bwget "1cfa3817-fe47-41b9-a7cd-acae01522f82" > $KIALO_ROOT/.aws/credentials
+chmod 0600 $KIALO_ROOT/.aws/credentials
 
 get assets/kialo/vimrc $KIALO_ROOT/.vimrc

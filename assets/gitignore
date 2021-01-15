@@ -1,4 +1,6 @@
 Session.vim
-.aws
-.venv
+.aws/
+.venv/
+.vimrc
 .envrc
+.direnv/
