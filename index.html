@@ -19,7 +19,7 @@ setup() {
         exit 1
       fi
       . "$SCRIPTS/$PKG" 2>&1 | tee -a "$INSTALL_LOGS/log"
-      echo "$(date) $PKG" >> "$INSTALL_LOGS/installed"
+      echo "$(date -u +'%Y-%m-%dT%H:%M:%SZ') $PKG" >> "$INSTALL_LOGS/installed"
     fi
   done
 }

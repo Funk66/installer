@@ -1,5 +1,7 @@
 #!/bin/sh
 
+setup zsh
+
 install noto-fonts mesa sway swaylock swayidle bemenu alacritty mako kanshi playerctl brightnessctl wl-clipboard waybar grim slurp
 
 cat << EOF > .zshenv
