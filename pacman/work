@@ -31,8 +31,8 @@ get assets/gopass.yml ~/.config/gopass/config.yml
 install pyenv python-snappy
 pyenv install 3.8.7
 
-export KIALO_ROOT=~/Workspace/kialo
-mkdir -p ~/Workspace
+export KIALO_ROOT=~/Workspace/kialo/kialo
+mkdir -p ~/Workspace/kialo
 git clone git@kialo.github.com:kialo/kialo.git $KIALO_ROOT
 cd $KIALO_ROOT || exit
 get assets/kialo/envrc $KIALO_ROOT/.envrc
