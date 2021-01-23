@@ -37,8 +37,8 @@ git clone git@kialo.github.com:kialo/kialo.git $KIALO_ROOT
 cd $KIALO_ROOT || exit
 get assets/kialo/envrc $KIALO_ROOT/.envrc
 direnv allow
-pip install flake8 mypy black jedi pynvim msgpack
-pip install -r $KIALO_ROOT/backend/requirements-dev.txt
+./direnv/python-3.8.7/bin/pip install flake8 mypy black jedi pynvim msgpack
+./direnv/python-3.8.7/bin/pip install -r $KIALO_ROOT/backend/requirements-dev.txt
 download-binaries
 
 mkdir -p $KIALO_ROOT/.aws
