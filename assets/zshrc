@@ -40,3 +40,4 @@ fi
 
 . ~/.config/zsh/p10k/powerlevel10k.zsh-theme
 . ~/.config/zsh/p10k.zsh
+. ~/.config/zsh/aliases.zsh
