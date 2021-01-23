@@ -62,10 +62,16 @@ install_basics() {
   sed -i 's/^HOOKS.*/HOOKS=(base systemd autodetect keyboard modconf block sd-encrypt sd-lvm2 filesystems fsck)/' /etc/mkinitcpio.conf
   mkinitcpio -p linux
 
-  pacman -S --noconfirm networkmanager wireless_tools wpa_supplicant dialog
-  systemctl enable net-auto-wireless.service
-  systemctl enable dhcpcd@eth0.service
-  systemctl enable NetworkManager
+  pacman -S --noconfirm iwd
+  systemctl enable iwd
+  systemctl enable systemd-resolved
+  cat << EOF > /etc/iwd/main.conf
+[General]
+EnableNetworkConfiguration=true
+[Network]
+EnableIPv6=true
+NameResolvingService=systemd
+EOF
 
   ln -sf /usr/share/zoneinfo/Europe/Berlin /etc/localtime
   hwclock --systohc
