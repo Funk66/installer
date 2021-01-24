@@ -1,0 +1,99 @@
+* {
+    border: none;
+    border-radius: 0;
+    font-size: 18px;
+    min-height: 0;
+}
+
+window#waybar {
+    background-color: #000000;
+    color: #ffffff;
+}
+
+window#waybar.hidden {
+    opacity: 0.2;
+}
+
+#workspaces button {
+    padding: 0 5px;
+    background-color: transparent;
+    color: #ffffff;
+}
+
+#workspaces button:hover {
+    background: #111111;
+}
+
+#workspaces button.focused {
+    background-color: #333333;
+}
+
+#workspaces button.urgent {
+    background-color: #330000;
+}
+
+#clock,
+#battery,
+#cpu,
+#memory,
+#network,
+#pulseaudio,
+#custom-media,
+#tray,
+#mode,
+#idle_inhibitor {
+    padding: 0 5px;
+    margin: 0 4px;
+    color: #dddddd;
+    background-color: #000000
+}
+
+#window,
+#workspaces {
+    margin: 0 4px;
+}
+
+/* If workspaces is the leftmost module, omit left margin */
+.modules-left > widget:first-child > #workspaces {
+    margin-left: 0;
+}
+
+#battery.charging {
+    color: #33cc33;
+}
+
+@keyframes blink {
+    to {
+        background-color: #cc3333;
+        color: #000000;
+    }
+}
+
+#battery.critical:not(.charging) {
+    color: #cc3333;
+    animation-name: blink;
+    animation-duration: 0.5s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+label:focus {
+    background-color: #000000;
+}
+
+#network.disconnected {
+    background-color: #aaaaaa;
+}
+
+#pulseaudio.muted {
+    color: #777777;
+}
+
+#custom-media.Paused {
+    color: #555555;
+}
+
+#idle_inhibitor.activated {
+    color: #33cc33;
+}
