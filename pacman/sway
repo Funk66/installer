@@ -2,7 +2,7 @@
 
 setup zsh
 
-install noto-fonts mesa sway swaylock swayidle bemenu alacritty mako kanshi playerctl brightnessctl wl-clipboard waybar grim slurp waybar
+install noto-fonts mesa sway swaylock swayidle bemenu alacritty mako kanshi playerctl brightnessctl wl-clipboard waybar grim slurp waybar wofi
 
 cat << EOF > .zshenv
 if [[ -z \$DISPLAY ]] && [[ \$(tty) = /dev/tty1 ]]; then
@@ -14,6 +14,7 @@ sed -i '2i \\nexport GDK_BACKEND=wayland' ~/.zshrc
 get assets/sway/alacritty.yml ~/.config/alacritty/alacritty.yml
 get assets/sway/waybar.json ~/.config/waybar/config
 get assets/sway/waybar.css ~/.config/waybar/style.css
+get assets/sway/wofi.css ~/.config/wofi/style.css
 for pkg in sway mako kanshi
 do
   get assets/sway/"${pkg}".conf ~/.config/"${pkg}"/config

@@ -1,0 +1,24 @@
+window {
+  border: 1px solid #333333;
+  background-color: #000000;
+  width: 300px;
+  height: 200px;
+}
+
+#input {
+  border: 1px solid #333333;
+  background-color: #000000;
+}
+
+#inner-box {
+  margin: 5px;
+}
+
+#entry {
+  color: #cccccc;
+}
+
+#entry:selected {
+  background-color: #111111;
+  color: #ffffff;
+}
