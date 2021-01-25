@@ -1,0 +1,5 @@
+#!/bin/bash
+
+get "common/tools" "$SCRIPTS/tools"
+. "$SCRIPTS/tools"
+install reflector
