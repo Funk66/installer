@@ -1,0 +1,5 @@
+#!/bin/sh
+
+get "common/git" "$SCRIPTS/git"
+. "$SCRIPTS/git"
+yay -S --noconfirm git-delta-bin
