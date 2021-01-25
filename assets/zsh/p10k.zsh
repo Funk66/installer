@@ -441,7 +441,7 @@
   #############[ kubecontext: current kubernetes context (https://kubernetes.io/) ]#############
   # Show kubecontext only when the the command you are typing invokes one of these tools.
   # Tip: Remove the next line to always show kubecontext.
-  typeset -g POWERLEVEL9K_KUBECONTEXT_SHOW_ON_COMMAND='kubectl|helm|kubens|kubectx|oc|istioctl|kogito|k9s|helmfile'
+  # typeset -g POWERLEVEL9K_KUBECONTEXT_SHOW_ON_COMMAND='kubectl|helm|kubens|kubectx|oc|istioctl|kogito|k9s|helmfile'
 
   # Kubernetes context classes for the purpose of using different colors, icons and expansions with
   # different contexts.
@@ -471,11 +471,20 @@
   #   typeset -g POWERLEVEL9K_KUBECONTEXT_TEST_VISUAL_IDENTIFIER_EXPANSION='⭐'
   #   typeset -g POWERLEVEL9K_KUBECONTEXT_TEST_CONTENT_EXPANSION='> ${P9K_CONTENT} <'
   typeset -g POWERLEVEL9K_KUBECONTEXT_CLASSES=(
-      # '*prod*'  PROD    # These values are examples that are unlikely
-      # '*test*'  TEST    # to match your needs. Customize them as needed.
+      '*prod*'  PROD
+      '*stag*'  STAG
+      '*test*'  TEST
+      '*futu*'  TEST
       '*'       DEFAULT)
-  typeset -g POWERLEVEL9K_KUBECONTEXT_DEFAULT_FOREGROUND=7
-  typeset -g POWERLEVEL9K_KUBECONTEXT_DEFAULT_BACKGROUND=5
+
+  typeset -g POWERLEVEL9K_KUBECONTEXT_PROD_FOREGROUND=0
+  typeset -g POWERLEVEL9K_KUBECONTEXT_PROD_BACKGROUND=1
+  typeset -g POWERLEVEL9K_KUBECONTEXT_STAG_FOREGROUND=0
+  typeset -g POWERLEVEL9K_KUBECONTEXT_STAG_BACKGROUND=3
+  typeset -g POWERLEVEL9K_KUBECONTEXT_TEST_FOREGROUND=0
+  typeset -g POWERLEVEL9K_KUBECONTEXT_TEST_BACKGROUND=6
+  typeset -g POWERLEVEL9K_KUBECONTEXT_DEFAULT_FOREGROUND=0
+  typeset -g POWERLEVEL9K_KUBECONTEXT_DEFAULT_BACKGROUND=7
   # typeset -g POWERLEVEL9K_KUBECONTEXT_DEFAULT_VISUAL_IDENTIFIER_EXPANSION='⭐'
 
   # Use POWERLEVEL9K_KUBECONTEXT_CONTENT_EXPANSION to specify the content displayed by kubecontext
@@ -530,7 +539,7 @@
   #[ aws: aws profile (https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html) ]#
   # Show aws only when the the command you are typing invokes one of these tools.
   # Tip: Remove the next line to always show aws.
-  typeset -g POWERLEVEL9K_AWS_SHOW_ON_COMMAND='aws|awless|terraform|pulumi|terragrunt'
+  # typeset -g POWERLEVEL9K_AWS_SHOW_ON_COMMAND=
 
   # POWERLEVEL9K_AWS_CLASSES is an array with even number of elements. The first element
   # in each pair defines a pattern against which the current AWS profile gets matched.
@@ -556,18 +565,19 @@
   #   typeset -g POWERLEVEL9K_AWS_TEST_VISUAL_IDENTIFIER_EXPANSION='⭐'
   #   typeset -g POWERLEVEL9K_AWS_TEST_CONTENT_EXPANSION='> ${P9K_CONTENT} <'
   typeset -g POWERLEVEL9K_AWS_CLASSES=(
-      # '*prod*'  PROD    # These values are examples that are unlikely
-      # '*test*'  TEST    # to match your needs. Customize them as needed.
+      '*prod*'  PROD
+      '*stag*'  STAG
+      '*test*'  TEST
       '*'       DEFAULT)
-  typeset -g POWERLEVEL9K_AWS_DEFAULT_FOREGROUND=7
-  typeset -g POWERLEVEL9K_AWS_DEFAULT_BACKGROUND=1
-  # typeset -g POWERLEVEL9K_AWS_DEFAULT_VISUAL_IDENTIFIER_EXPANSION='⭐'
 
-
-  # User-defined prompt segments can be customized the same way as built-in segments.
-  typeset -g POWERLEVEL9K_EXAMPLE_FOREGROUND=3
-  typeset -g POWERLEVEL9K_EXAMPLE_BACKGROUND=1
-  # typeset -g POWERLEVEL9K_EXAMPLE_VISUAL_IDENTIFIER_EXPANSION='⭐'
+  typeset -g POWERLEVEL9K_AWS_PROD_FOREGROUND=0
+  typeset -g POWERLEVEL9K_AWS_PROD_BACKGROUND=1
+  typeset -g POWERLEVEL9K_AWS_STAG_FOREGROUND=0
+  typeset -g POWERLEVEL9K_AWS_STAG_BACKGROUND=3
+  typeset -g POWERLEVEL9K_AWS_TEST_FOREGROUND=0
+  typeset -g POWERLEVEL9K_AWS_TEST_BACKGROUND=6
+  typeset -g POWERLEVEL9K_AWS_DEFAULT_FOREGROUND=0
+  typeset -g POWERLEVEL9K_AWS_DEFAULT_BACKGROUND=7
 
   # Transient prompt works similarly to the builtin transient_rprompt option. It trims down prompt
   # when accepting a command line. Supported values:
