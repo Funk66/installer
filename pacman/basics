@@ -1,5 +1,6 @@
 #!/bin/sh
 
-install libreoffice evince firefox imv
+install libreoffice evince firefox imv vlc qt5-wayland
 
+sed -i '2i export QT_QPA_PLATFORM=wayland' ~/.zshrc
 sed -i '2i \\nexport MOZ_ENABLE_WAYLAND=1' ~/.zshrc

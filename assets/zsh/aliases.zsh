@@ -5,3 +5,7 @@ alias grep='grep --color=auto'
 
 alias moon='curl wttr.in/Moon'
 alias weather='curl wttr.in/Berlin'
+
+cht() {
+  curl cht.sh/$1
+}
