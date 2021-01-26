@@ -1,0 +1,6 @@
+#!/bin/bash
+
+install aws-cli
+pip install --user --upgrade awsume
+mkdir -p ~/.awsume
+get assets/awsume.yaml ~/.awsume/config.yaml
