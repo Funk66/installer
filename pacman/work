@@ -48,3 +48,20 @@ bwget "1cfa3817-fe47-41b9-a7cd-acae01522f82" > $KIALO_ROOT/.aws/credentials
 chmod 0600 $KIALO_ROOT/.aws/credentials
 
 get assets/kialo/vimrc $KIALO_ROOT/.vimrc
+
+git config user.name 'Guillermo Guirao Aguilar'
+git config user.email 'gga@kialo.com'
+git config user.fingerprint '500DD327'
+
+pre-commit install -f --install-hooks -t pre-commit -t commit-msg
+
+# TODO: secret
+echo "MFA_SERIAL=arn:aws:iam::123448139561:mfa/gga" > $KIALO_ROOT/.aws/mfa
+cat << EOF >> ~/.config/zsh/aliases.zsh
+alias kk="pushd ~/Workspace/kialo/kialo > /dev/null"
+alias eks=". \$KIALO_ROOT/.kube/eks.zsh"
+alias assume=". \$KIALO_ROOT/.aws/assume.zsh"
+EOF
+
+mkdir -p $KIALO_ROOT/.{aws,kube}
+chmod 700 $KIALO_ROOT/.{aws,kube}

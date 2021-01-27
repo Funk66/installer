@@ -3,6 +3,8 @@
 export KIALO_ROOT=~/Workspace/kialo/kialo
 export PATH="$KIALO_ROOT/development/bin:$PATH"
 export AWS_CONFIG_FILE=$KIALO_ROOT/.aws/credentials
+export AWS_DEFAULT_REGION=us-east-1
+export TF_CLI_CONFIG_FILE=$KIALO_ROOT/.terraformrc
 
 layout python ~/.pyenv/versions/3.8.7/bin/python
 add_extra_vimrc

@@ -1,6 +1,9 @@
 Session.vim
 .aws/
+.kube/
 .venv/
 .vimrc
 .envrc
 .direnv/
+.terraform.d/
+.terraformrc
