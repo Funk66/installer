@@ -2,5 +2,7 @@
 
 install libreoffice evince firefox imv vlc qt5-wayland
 
-sed -i '2i export QT_QPA_PLATFORM=wayland' ~/.zshrc
-sed -i '2i \\nexport MOZ_ENABLE_WAYLAND=1' ~/.zshrc
+sed -i '1i export QT_QPA_PLATFORM=wayland' ~/.zshenv
+sed -i '1i export MOZ_ENABLE_WAYLAND=1' ~/.zshenv
+
+# Firefox: about:config > webgl.force-enabled : true

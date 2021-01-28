@@ -2,9 +2,13 @@
 
 setup zsh
 
-install noto-fonts mesa sway swaylock swayidle bemenu alacritty mako kanshi playerctl brightnessctl wl-clipboard waybar grim slurp waybar wofi
+install noto-fonts noto-fonts-emoji mesa sway swaylock swayidle bemenu alacritty mako kanshi playerctl brightnessctl wl-clipboard waybar grim slurp waybar wofi pipewire xdg-desktop-portal xdg-desktop-portal-wlr libnotify
 
 cat << EOF > .zshenv
+export MOZ_ENABLE_WAYLAND=1
+export QT_QPA_PLATFORM=wayland
+export XDG_CURRENT_DESKTOP=sway
+
 if [[ -z \$DISPLAY ]] && [[ \$(tty) = /dev/tty1 ]]; then
   XKB_DEFAULT_LAYOUT=es exec sway
 fi

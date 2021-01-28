@@ -65,6 +65,7 @@ install_basics() {
   pacman -S --noconfirm iwd
   systemctl enable iwd
   systemctl enable systemd-resolved
+  ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf
   cat << EOF > /etc/iwd/main.conf
 [General]
 EnableNetworkConfiguration=true
