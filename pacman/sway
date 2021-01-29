@@ -6,8 +6,9 @@ install noto-fonts noto-fonts-emoji mesa sway swaylock swayidle bemenu alacritty
 
 cat << EOF > .zshenv
 export MOZ_ENABLE_WAYLAND=1
-export QT_QPA_PLATFORM=wayland
 export XDG_CURRENT_DESKTOP=sway
+export QT_QPA_PLATFORM=wayland
+export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
 
 if [[ -z \$DISPLAY ]] && [[ \$(tty) = /dev/tty1 ]]; then
   XKB_DEFAULT_LAYOUT=es exec sway
@@ -23,3 +24,6 @@ for pkg in sway mako kanshi
 do
   get assets/sway/"${pkg}".conf ~/.config/"${pkg}"/config
 done
+
+mkdir ~/{Documents,Downloads,Music,Pictures,Videos,Workspace}
+get assets/user-dirs.dirs ~/.config/user-dirs.dirs
