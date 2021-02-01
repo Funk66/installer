@@ -64,27 +64,20 @@ install_basics() {
 
   pacman -S --noconfirm iwd
   systemctl enable iwd
+  systemctl enable systemd-networkd
   systemctl enable systemd-resolved
   ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf
-  cat << EOF > /etc/iwd/main.conf
-[General]
-EnableNetworkConfiguration=true
-[Network]
-EnableIPv6=true
-NameResolvingService=systemd
-EOF
+  get assets/network/wired.config /etc/systemd/network/20-wired.network
+  get assets/network/wireless.config /etc/systemd/network/25-wireless.network
+  get assets/network/iwd.config /etc/iwd/main.conf
+  get assets/network/hosts /etc/hosts
+  echo arch > /etc/hostname
 
   ln -sf /usr/share/zoneinfo/Europe/Berlin /etc/localtime
   hwclock --systohc
   locale-gen
   echo "LANG=en_US.UTF-8" > /etc/locale.conf
   echo "KEYMAP=es" > /etc/vconsole.conf
-  echo arch > /etc/hostname
-  cat << EOF > /etc/hosts
-127.0.0.1	localhost
-::1		localhost
-127.0.1.1	arch.localdomain	arch
-EOF
 
   useradd --create-home guillermo
   pacman -S --noconfirm sudo
