@@ -39,8 +39,9 @@
     },
     "network": {
         "format-wifi": "",
-        "format-ethernet": "",
-        "format-linked": "",
+        "tooltip-format": "{ipaddr}",
+        "format-ethernet": "",
+        "format-linked": "",
         "format-disconnected": "⚠",
         "format-alt": "{essid}"
     },
