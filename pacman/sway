@@ -2,7 +2,7 @@
 
 setup zsh
 
-install noto-fonts noto-fonts-emoji mesa sway swaylock swayidle bemenu alacritty mako kanshi playerctl brightnessctl wl-clipboard waybar grim slurp waybar wofi pipewire xdg-desktop-portal xdg-desktop-portal-wlr libnotify
+install noto-fonts noto-fonts-emoji mesa sway swaylock swayidle bemenu alacritty mako kanshi playerctl brightnessctl wl-clipboard waybar grim slurp waybar wofi pipewire xdg-desktop-portal xdg-desktop-portal-wlr libnotify udisks2 udiskie
 
 cat << EOF > .zshenv
 export MOZ_ENABLE_WAYLAND=1
