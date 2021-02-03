@@ -1,0 +1,6 @@
+#!/bin/sh
+
+setup bw
+
+install rclone
+bwget Rclone > ~/.config/rclone/rclone.conf
