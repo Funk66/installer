@@ -1,0 +1,10 @@
+#!/bin/bash
+
+install bluez bluez-utils pulseaudio-bluetooth
+sudo systemctl enable bluetooth
+sed -i 's/#AutoEnable=false/AutoEnable=true/' /etc/bluetooth/main.conf
+cat << EOF >> /etc/pulse/system.pa
+load-module module-bluetooth-policy
+load-module module-bluetooth-discover"
+EOF
+usermod -a -G lp $USER
