@@ -11,7 +11,7 @@ bwget "fb21d443-4f27-4812-a404-aca401096867" | gpg --import
 echo "0E5F27342AF9AFB6FCE9504635AB7E86500DD327:6" | gpg --import-ownertrust
 gpg --export-ssh-key gga@kialo.com > ~/.ssh/id_card.pub
 chmod 0600 ~/.ssh/id_card.pub
-echo "enable-ssh-support" > ~/.config/gnupg/gpg-agent.conf
+echo "enable-ssh-support\npinentry-program /usr/bin/pinentry-qt" > ~/.config/gnupg/gpg-agent.conf
 get assets/zsh/gpg.zsh ~/.config/zsh/gpg.zsh
 echo ". ~/.config/zsh/gpg.zsh" >> ~/.zshrc
 . ~/.config/zsh/gpg.zsh

@@ -29,6 +29,9 @@ setopt NO_BEEP
 setopt RM_STAR_WAIT
 setopt NOCLOBBER
 setopt EXTENDED_GLOB
+setopt AUTO_PUSHD
+setopt PUSHD_IGNORE_DUPS
+export DIRSTACKSIZE=10
 
 bindkey -v
 

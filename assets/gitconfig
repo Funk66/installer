@@ -1,5 +1,7 @@
 # vim: ft=gitconfig
 
+[init]
+  defaultBranch = master
 [user]
   name = Guillermo Guirao Aguilar
   email = ggaguilar@gmail.com
