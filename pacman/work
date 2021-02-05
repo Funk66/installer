@@ -67,3 +67,5 @@ mkdir -p $KIALO_ROOT/.{aws,kube}
 chmod 700 $KIALO_ROOT/.{aws,kube}
 get assets/kialo/assume.zsh $KIALO_ROOT/.aws/assume.zsh
 get assets/kialo/eks.zsh $KIALO_ROOT/.kube/eks.zsh
+get assets/kialo/kns.zsh $KIALO_ROOT/development/bin/kns
+chmod +x $KIALO_ROOT/development/bin/kns

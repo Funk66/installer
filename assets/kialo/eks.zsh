@@ -1,4 +1,4 @@
-#!/usb/bin/zsh
+#!/usr/bin/zsh
 
 typeset -A CLUSTERS=(
   development "development    us-east-1    namespace"
@@ -6,8 +6,7 @@ typeset -A CLUSTERS=(
   production  "production     us-east-1    namespace"
 )
 
-CLUSTER=$1
-[ -z $CLUSTERS[$CLUSTER] ] && CLUSTER=$(echo ${(k)CLUSTERS} | tr ' ' '\n' | fzf -1 --height 9 --reverse --query=${CLUSTER})
+CLUSTER=$(echo ${(k)CLUSTERS} | tr ' ' '\n' | fzf -1 --height 9 --reverse --query="${1:-""}")
 [ -z $CLUSTER ] || [[ "${KUBECONFIG}" =~ "/${CLUSTER}$" ]] && return
 read ACCOUNT REGION NAMESPACE <<< $(echo $CLUSTERS[$CLUSTER])
 [ "$AWSUME_PROFILE" != "$ACCOUNT" ] && assume $ACCOUNT

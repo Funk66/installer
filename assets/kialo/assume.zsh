@@ -1,7 +1,4 @@
-#!/usb/bin/zsh
-
-ACCOUNT=$1
-[ -n "$AWS_PROFILE" ] && [ "$ACCOUNT" = "$AWS_PROFILE" ] && return
+#!/usr/bin/zsh
 
 typeset -A ACCOUNTS=(
   development 1234567890
@@ -9,8 +6,8 @@ typeset -A ACCOUNTS=(
   production  1234567890
 )
 
-[ -z ${ACCOUNTS[$ACCOUNT]} ] && ACCOUNT=$(echo ${(k)ACCOUNTS} | tr ' ' '\n' | fzf -1 --height 10 --reverse --query=${1})
-[ -z $ACCOUNT ] && return
+ACCOUNT=$(echo ${(k)ACCOUNTS} | tr ' ' '\n' | fzf -1 --height 10 --reverse --query=${1})
+[ -z $ACCOUNT ] || [ "$ACCOUNT" = "$AWS_PROFILE" ] && return
 FILE=$KIALO_ROOT/.aws/$ACCOUNT
 
 if [ ! -f "$FILE" ] || [ "$(find $FILE -mmin +720)" ]
