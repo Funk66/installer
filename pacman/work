@@ -24,6 +24,7 @@ Host kialo.github.com
 EOF
 
 install gopass
+yay -S --noconfirm gopass-jsonapi-git
 git clone git@kialo.github.com:gga-kialo/secrets.git ~/.local/share/gopass/stores/root
 git clone git@kialo.github.com:kialo/secrets.git ~/.local/share/gopass/stores/kialo
 get assets/gopass.yml ~/.config/gopass/config.yml
