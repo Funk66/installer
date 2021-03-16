@@ -52,7 +52,7 @@ get assets/kialo/vimrc $KIALO_ROOT/.vimrc
 
 git config user.name 'Guillermo Guirao Aguilar'
 git config user.email 'gga@kialo.com'
-git config user.fingerprint '500DD327'
+git config commit.gpgsign true
 
 pre-commit install -f --install-hooks -t pre-commit -t commit-msg
 
