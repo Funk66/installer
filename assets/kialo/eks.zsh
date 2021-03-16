@@ -6,7 +6,8 @@ typeset -A CLUSTERS=(
   production  "production     us-east-1    namespace"
 )
 
-CLUSTER=$(echo ${(k)CLUSTERS} | tr ' ' '\n' | fzf -1 --height 9 --reverse --query="${1:-""}")
+CLUSTER=$1
+[ -z ${CLUSTERS[$CLUSTER]} ] && CLUSTER=$(echo ${(k)CLUSTERS} | tr ' ' '\n' | fzf -1 --height 9 --reverse --query=$CLUSTER)
 [ -z $CLUSTER ] || [[ "${KUBECONFIG}" =~ "/${CLUSTER}$" ]] && return
 read ACCOUNT REGION NAMESPACE <<< $(echo $CLUSTERS[$CLUSTER])
 [ "$AWSUME_PROFILE" != "$ACCOUNT" ] && assume $ACCOUNT
@@ -14,6 +15,8 @@ export KUBECONFIG=$KIALO_ROOT/.kube/$CLUSTER
 
 if [ ! -f $KUBECONFIG ] || [ "$(find $KUBECONFIG -mmin +59)" ]
 then
-  aws eks update-kubeconfig --name "$CLUSTER" --alias "$CLUSTER" --region "$REGION"
-  kubectl config set-context "$CLUSTER" --namespace "$NAMESPACE"
+  rm -f $KUBECONFIG
+  aws eks update-kubeconfig --name "$CLUSTER" --alias "$CLUSTER" --region "$REGION" > /dev/null
+  kubectl config set-context "$CLUSTER" --namespace "$NAMESPACE" > /dev/null
+  echo -e "Switched to \033[92m$CLUSTER\033[0m"
 fi

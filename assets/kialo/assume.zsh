@@ -6,7 +6,8 @@ typeset -A ACCOUNTS=(
   production  1234567890
 )
 
-ACCOUNT=$(echo ${(k)ACCOUNTS} | tr ' ' '\n' | fzf -1 --height 10 --reverse --query=${1})
+ACCOUNT=$1
+[ -z ${ACCOUNTS[$ACCOUNT]} ] && ACCOUNT=$(echo ${(k)ACCOUNTS} | tr ' ' '\n' | fzf -1 --height 10 --reverse --query=$ACCOUNT)
 [ -z $ACCOUNT ] || [ "$ACCOUNT" = "$AWS_PROFILE" ] && return
 FILE=$KIALO_ROOT/.aws/$ACCOUNT
 
