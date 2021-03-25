@@ -1,0 +1,9 @@
+#!/bin/sh
+
+setup yay
+
+yay -S --noconfirm google-chrome
+cat << EOF > ~/.config/chrome-flags.conf
+--enable-features=UseOzonePlatform
+--ozone-platform=wayland
+EOF
