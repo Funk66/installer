@@ -1,0 +1,9 @@
+#!/bin/sh
+
+install cups hplip
+sudo systemctl start cups
+URI=$(sudo lpinfo -v | grep -o 'usb://.*LaserJet.*$')
+if [ -z "$URI" ]
+  then sudo lpadmin -p "Laserjet1010" -E -v "$URI" -m "drv:///hp/hpcups.drv/hp-laserjet_1010.ppd"
+  else echo "\033[91mPrinter not connected\033[0m"
+fi
