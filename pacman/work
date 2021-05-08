@@ -21,6 +21,8 @@ Host kialo.github.com
   Hostname github.com
   IdentityFile ~/.ssh/id_card.pub
   IdentitiesOnly yes
+
+Match host * exec "gpg-connect-agent UPDATESTARTUPTTY /bye"
 EOF
 
 install gopass
