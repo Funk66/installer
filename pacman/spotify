@@ -5,8 +5,7 @@ setup yay
 yay -S --noconfirm python-spotpris2 spotify-tui
 bwget "SpotPRIS2 creds" > ~/.config/spotpris2.cfg
 bwget "SpotPRIS2 cache" > ~/.cache/spotpris2
-systemctl --user start spotpris2
-systemctl --user enable spotpris2
+systemctl --user enable --now spotpris2
 
 mkdir -p ~/.config/spotify-tui
 bwget "Spotify TUI" > ~/.config/spotify-tui/client.yml

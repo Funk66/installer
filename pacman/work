@@ -3,8 +3,7 @@
 setup bw gpg direnv
 
 install yubikey-manager
-sudo systemctl start pcscd.service
-sudo systemctl enable pcscd.service
+sudo systemctl enable --now pcscd.service
 gpg --card-status || (echo "Cannot detect Yubikey" && exit 1)
 
 bwget "fb21d443-4f27-4812-a404-aca401096867" | gpg --import
