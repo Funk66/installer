@@ -18,5 +18,6 @@ then
   rm -f $KUBECONFIG
   aws eks update-kubeconfig --name "$CLUSTER" --alias "$CLUSTER" --region "$REGION" > /dev/null
   kubectl config set-context "$CLUSTER" --namespace "$NAMESPACE" > /dev/null
+  chmod 600 $KUBECONFIG
   echo -e "Switched to \033[92m$CLUSTER\033[0m"
 fi
