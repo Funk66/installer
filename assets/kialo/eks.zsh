@@ -11,6 +11,7 @@ CLUSTER=$1
 [ -z $CLUSTER ] || [[ "${KUBECONFIG}" =~ "/${CLUSTER}$" ]] && return
 read ACCOUNT REGION NAMESPACE <<< $(echo $CLUSTERS[$CLUSTER])
 [ "$AWSUME_PROFILE" != "$ACCOUNT" ] && assume $ACCOUNT
+[ -z ${AWS_PROFILE} ] && return 1
 export KUBECONFIG=$KIALO_ROOT/.kube/$CLUSTER
 
 if [ ! -f $KUBECONFIG ] || [ "$(find $KUBECONFIG -mmin +59)" ]
