@@ -3,3 +3,13 @@ colors:
     background: '0x000000'
 key_bindings:
   - { key: Return, mods: Control|Shift, action: SpawnNewInstance }
+font:
+  normal:
+    family: JetBrains Mono
+    style: Regular
+  bold:
+    family: JetBrains Mono
+    style: Medium
+  italic:
+    family: JetBrains Mono
+    style: Italic

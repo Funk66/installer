@@ -7,3 +7,5 @@ if [ -z "$URI" ]
   then sudo lpadmin -p "Laserjet1010" -E -v "$URI" -m "drv:///hp/hpcups.drv/hp-laserjet_1010.ppd"
   else echo "\033[91mPrinter not connected\033[0m"
 fi
+
+sudo lpadmin -p Kialo -E -v lpd://KMA38673/print

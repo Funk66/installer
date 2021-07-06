@@ -1,8 +1,9 @@
 #!/bin/sh
 
-install libreoffice evince firefox imv vlc qt5-wayland
+install libreoffice evince firefox imv vlc qt5-wayland calibre
 
 sed -i '1i export QT_QPA_PLATFORM=wayland' ~/.zshenv
 sed -i '1i export MOZ_ENABLE_WAYLAND=1' ~/.zshenv
 
 # Firefox: about:config > webgl.force-enabled : true
+# sudo boltctl enroll 008c8894-fbb6-3d00-ffff-ffffffffffff
