@@ -1,0 +1,5 @@
+#!/bin/sh
+
+install ttf-jetbrains-mono adobe-source-han-sans-jp-fonts adobe-source-han-serif-jp-fonts
+get common/fonts $SCRIPTS/fonts-common.sh
+. $SCRIPTS/fonts-common.sh
