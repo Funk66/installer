@@ -11,7 +11,7 @@
   excludesfile = ~/.gitignore_global
   pager = delta
 [interactive]
-    diffFilter = delta --color-only
+  diffFilter = delta --color-only
 [pull]
   rebase = false
 [mergetool]
@@ -30,14 +30,15 @@
   lg = !"git log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)"
   up = pull --rebase --prune --autostash
   back = checkout -
+  ch = "!f() { git switch $(git branch | fzf -1 --height 7 --reverse --query=\"$1\" | tr -d '([:space:]|*)'); }; f"
 [push]
   default = current
 [color]
-	ui = true
+  ui = true
 [delta]
-    features = side-by-side line-numbers decorations
-    whitespace-error-style = 22 reverse
+  features = side-by-side line-numbers decorations
+  whitespace-error-style = 22 reverse
 [delta "decorations"]
-    commit-decoration-style = bold yellow box ul
-    file-style = bold yellow ul
-    file-decoration-style = none
+  commit-decoration-style = bold yellow box ul
+  file-style = bold yellow ul
+  file-decoration-style = none
