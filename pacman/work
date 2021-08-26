@@ -32,7 +32,7 @@ get assets/gopass.yml ~/.config/gopass/config.yml
 gopass sync
 
 install pyenv python-snappy
-PYTHON_VERSION=3.9.5
+PYTHON_VERSION=3.9.6
 pyenv install $PYTHON_VERSION
 
 export KIALO_ROOT=~/Workspace/kialo/kialo
@@ -55,6 +55,7 @@ get assets/kialo/vimrc $KIALO_ROOT/.vimrc
 git config user.name 'Guillermo Guirao Aguilar'
 git config user.email 'gga@kialo.com'
 git config commit.gpgsign true
+git config blame.ignoreRevsFile .git-blame-ignore-revs
 
 pre-commit install -f --install-hooks -t pre-commit -t commit-msg
 
