@@ -3,7 +3,7 @@
 set -ex
 
 SUDO="$(command -v sudo || true) "
-CONTAINER=$(grep -q docker /proc/self/cgroup && echo "true" || true)
+CONTAINER=$(grep -q docker /proc/self/cgroup 2> /dev/null && echo "true" || true)
 
 setup() {
   for PKG in "$@"
@@ -36,6 +36,9 @@ install() {
     pacman)
       sudo pacman -S --needed --noconfirm $@
       ;;
+    brew)
+      brew install $@
+      ;;
   esac
 }
 
@@ -51,15 +54,29 @@ sudo() {
   ${SUDO}$@
 }
 
+brew() {
+  if ! available brew
+  then
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    brew update
+  fi
+  /usr/local/bin/brew $@
+}
+
 bwget() {
   [ -z "$BW_SESSION" ] && export BW_SESSION=$(bw unlock --raw)
   bw get item "$1" | jq -r ".notes"
 }
 
-for INSTALLER in apt dnf pacman
-do
-  available $INSTALLER && break
-done
+if [ $(uname) = "Darwin" ]
+then
+  INSTALLER=brew
+else
+  for INSTALLER in apt dnf pacman
+  do
+    available $INSTALLER && break
+  done
+fi
 
 if [ -z $INSTALLER ]
 then
