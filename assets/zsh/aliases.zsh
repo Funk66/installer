@@ -1,6 +1,9 @@
-alias ip='ip -color=auto'
-alias ls='ls --color=auto'
-alias diff='diff --color=auto'
+if [ ! $(uname) = "Darwin" ]
+then
+  alias ip='ip -color=auto'
+  alias ls='ls --color=auto'
+  alias diff='diff --color=auto'
+fi
 alias grep='grep --color=auto'
 alias d='dirs -v'
 

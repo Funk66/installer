@@ -50,6 +50,10 @@ available() {
   command -v "$1" > /dev/null 2>&1
 }
 
+mac() {
+  [ $(uname) = "Darwin" ]
+}
+
 sudo() {
   ${SUDO}$@
 }
@@ -68,7 +72,7 @@ bwget() {
   bw get item "$1" | jq -r ".notes"
 }
 
-if [ $(uname) = "Darwin" ]
+if mac
 then
   INSTALLER=brew
 else
