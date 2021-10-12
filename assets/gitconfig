@@ -31,6 +31,7 @@
   up = pull --rebase --prune --autostash
   back = checkout -
   ch = "!f() { git switch $(git branch | fzf -1 --height 7 --reverse --query=\"$1\" | tr -d '([:space:]|*)'); }; f"
+  s = status
 [push]
   default = current
 [color]

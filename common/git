@@ -3,3 +3,4 @@
 available git || install git
 get assets/gitignore ~/.gitignore_global
 get assets/gitconfig ~/.gitconfig
+[ mac ] && xcode-select --install

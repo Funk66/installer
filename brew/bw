@@ -1,4 +1,4 @@
 #!/bin/sh
 
-brew install bitwarden-cli
+install bitwarden-cli
 bw login

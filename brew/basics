@@ -1,0 +1,3 @@
+#!/bin/sh
+
+install firefox iterm2 spotify direnv npm wget fzf jq ripgrep bat delta
