@@ -1,10 +1,13 @@
 #!/bin/sh
 
+setup zsh
+
 mkdir -p ~/.config/gnupg ~/.ssh
 chmod 0700 ~/.config/gnupg
 export GNUPGHOME="$HOME/.config/gnupg"
-sed '2i \\nexport GNUPGHOME="~/.config/gnupg"' ~/.zshrc
 get assets/gnupg/gpg-agent.conf ~/.config/gnupg/gpg-agent.conf
+get assets/zsh/gpg.zsh ~/.config/zsh/gpg.zsh
+grep '. ~/.config/zsh/gpg.zsh' ~/.zshrc || echo '. ~/.config/zsh/gpg.zsh' >> ~/.zshrc
 
 gpg --import <(bwget "a060bead-ffdd-4760-a6fa-aca50097b257")
 echo "39905145A381C2119DA34ACDF1A9429A643F4A88:6" | gpg --import-ownertrust

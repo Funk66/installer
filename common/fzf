@@ -1,5 +1,7 @@
 #!/bin/sh
 
+setup zsh
+
 if mac
 then install fzf
 else
