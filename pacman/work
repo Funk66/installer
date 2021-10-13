@@ -40,7 +40,7 @@ export KIALO_ROOT=~/Workspace/kialo/kialo
 mkdir -p ~/Workspace/kialo/kialo
 git clone git@kialo.github.com:kialo/kialo.git $KIALO_ROOT
 cd $KIALO_ROOT || exit
-get assets/kialo/envrc $KIALO_ROOT/.envrc
+get assets/kialo/envrc $KIALO_ROOT/../.envrc
 direnv allow
 ./direnv/python-$PYTHON_VERSION/bin/pip install flake8 mypy black jedi pynvim msgpack
 ./direnv/python-$PYTHON_VERSION/bin/pip install -r $KIALO_ROOT/backend/requirements-dev.txt

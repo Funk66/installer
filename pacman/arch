@@ -38,7 +38,7 @@ mkfs.ext4 /dev/mapper/data
 mkdir /mnt/data
 mount /dev/mapper/data /mnt/data
 
-sed -i "1i Server = https://mirror.pkgbuild.com/\$repo/os/\$arch" /etc/pacman.d/mirrorlist
+sed "1i Server = https://mirror.pkgbuild.com/\$repo/os/\$arch" /etc/pacman.d/mirrorlist
 pacstrap /mnt base linux linux-firmware
 cp /etc/pacman.d/mirrorlist /mnt/etc/pacman.d/mirrorlist
 
@@ -50,16 +50,16 @@ echo "data UUID=${DATA_UUID} /root/datakey discard" > /mnt/etc/crypttab
 genfstab -U /mnt >> /mnt/etc/fstab
 
 install_basics() {
-  sed -i "s/^#Color$/Color/" /etc/pacman.conf
+  sed "s/^#Color$/Color/" /etc/pacman.conf
   pacman -Syyu --noconfirm grub efibootmgr lvm2 fwupd tpm2-tss bolt
   ROOT_UUID=$(lsblk -f | grep ${BLKS}p3 | tr -s " " | cut -d " " -f 4)
-  sed -i "/^GRUB_CMDLINE_LINUX_DEFAULT/s/ quiet//" /etc/default/grub
-  sed -i "s/^\(GRUB_TIMEOUT\)=.*/\1=1/" /etc/default/grub
-  sed -i "s|^\(GRUB_CMDLINE_LINUX\)=.*|\1=\"rd.luks.name=${ROOT_UUID}=root root=/dev/mapper/root\"|" /etc/default/grub
+  sed "/^GRUB_CMDLINE_LINUX_DEFAULT/s/ quiet//" /etc/default/grub
+  sed "s/^\(GRUB_TIMEOUT\)=.*/\1=1/" /etc/default/grub
+  sed "s|^\(GRUB_CMDLINE_LINUX\)=.*|\1=\"rd.luks.name=${ROOT_UUID}=root root=/dev/mapper/root\"|" /etc/default/grub
   grub-install /dev/${BLKS} --target=x86_64-efi --efi-directory=/boot
   grub-mkconfig -o /boot/grub/grub.cfg
 
-  sed -i 's/^HOOKS.*/HOOKS=(base systemd autodetect keyboard modconf block sd-encrypt sd-lvm2 filesystems fsck)/' /etc/mkinitcpio.conf
+  sed 's/^HOOKS.*/HOOKS=(base systemd autodetect keyboard modconf block sd-encrypt sd-lvm2 filesystems fsck)/' /etc/mkinitcpio.conf
   mkinitcpio -p linux
 
   pacman -S --noconfirm iwd
@@ -83,8 +83,8 @@ install_basics() {
   useradd --create-home guillermo
   pacman -S --noconfirm sudo
   echo -e "$1\n$1" | passwd guillermo
-  sed -i "s/^root/guillermo/" /etc/sudoers
-  sed -i "80i Defaults timestamp_timeout=5" /etc/sudoers
+  sed "s/^root/guillermo/" /etc/sudoers
+  sed "80i Defaults timestamp_timeout=5" /etc/sudoers
   passwd -l root
   mkdir -p /etc/systemd/system/getty\@tty1.service.d
   cat << EOF > /etc/systemd/system/getty\@tty1.service.d/override.conf
@@ -93,7 +93,7 @@ ExecStart=
 ExecStart=-/usr/bin/agetty --autologin guillermo --noclear %I $TERM
 EOF
 
-  sed -i '/^#en_\(GB\|US\).UTF-8/s/^#//' /etc/locale.gen
+  sed '/^#en_\(GB\|US\).UTF-8/s/^#//' /etc/locale.gen
   locale-gen
   cat << EOF > /etc/locale.conf
 LANG=en_US.UTF-8

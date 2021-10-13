@@ -76,11 +76,13 @@ bwget() {
 if mac
 then
   INSTALLER=brew
+  alias sed="sed -i ''"
 else
   for INSTALLER in apt dnf pacman
   do
     available $INSTALLER && break
   done
+  alias sed="sed -i"
 fi
 
 if [ -z $INSTALLER ]

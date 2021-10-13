@@ -5,7 +5,7 @@ setup zsh
 install tmux
 get assets/tmux ~/.config/tmux
 get assets/zsh/tmux.zsh ~/.config/zsh/tmux.zsh
-grep '. ~/.config/zsh/tmux.zsh' ~/.zshrc || sed -i '36i. ~/.config/zsh/tmux.zsh\n' ~/.zshrc
+grep '. ~/.config/zsh/tmux.zsh' ~/.zshrc || sed '36i. ~/.config/zsh/tmux.zsh\n' ~/.zshrc
 
 if available fzf
 then

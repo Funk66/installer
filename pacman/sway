@@ -15,7 +15,7 @@ if [[ -z \$DISPLAY ]] && [[ \$(tty) = /dev/tty1 ]]; then
 fi
 EOF
 
-sed -i '2i \\nexport GDK_BACKEND=wayland' ~/.zshrc
+sed '2i \\nexport GDK_BACKEND=wayland' ~/.zshrc
 get assets/sway/alacritty.yml ~/.config/alacritty/alacritty.yml
 get assets/sway/waybar.json ~/.config/waybar/config
 get assets/sway/waybar.css ~/.config/waybar/style.css

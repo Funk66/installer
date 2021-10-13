@@ -3,7 +3,7 @@
 mkdir -p ~/.config/gnupg ~/.ssh
 chmod 0700 ~/.config/gnupg
 export GNUPGHOME="$HOME/.config/gnupg"
-sed -i '2i \\nexport GNUPGHOME="~/.config/gnupg"' ~/.zshrc
+sed '2i \\nexport GNUPGHOME="~/.config/gnupg"' ~/.zshrc
 get assets/gnupg/gpg-agent.conf ~/.config/gnupg/gpg-agent.conf
 
 gpg --import <(bwget "a060bead-ffdd-4760-a6fa-aca50097b257")
