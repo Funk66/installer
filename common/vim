@@ -19,7 +19,7 @@ fi
 
 pip3 install --upgrade --user flake8 mypy black jedi pynvim msgpack
 available npm && sudo npm i -g eslint stylelint neovim
-nvim +PackerSync +qa
+nvim +PackerSync
 
 if [ -f ~/.zshrc ]
 then

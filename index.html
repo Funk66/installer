@@ -54,6 +54,13 @@ mac() {
   [ $(uname) = "Darwin" ]
 }
 
+sed() {
+  if mac
+  then sed -i '' $@
+  else sed -i $@
+  fi
+}
+
 sudo() {
   ${SUDO}$@
 }
@@ -75,15 +82,12 @@ bwget() {
 }
 
 if mac
-then
-  INSTALLER=brew
-  alias sed="sed -i ''"
+then INSTALLER=brew
 else
   for INSTALLER in apt dnf pacman
   do
     available $INSTALLER && break
   done
-  alias sed="sed -i"
 fi
 
 if [ -z $INSTALLER ]

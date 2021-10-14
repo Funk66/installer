@@ -8,6 +8,13 @@ export GNUPGHOME="$HOME/.config/gnupg"
 get assets/gnupg/gpg-agent.conf ~/.config/gnupg/gpg-agent.conf
 get assets/zsh/gpg.zsh ~/.config/zsh/gpg.zsh
 grep '. ~/.config/zsh/gpg.zsh' ~/.zshrc || echo '. ~/.config/zsh/gpg.zsh' >> ~/.zshrc
+if mac
+then
+  install pinentry-mac
+  PINENTRY=$(brew --prefix)/bin/pinentry-mac
+else PINENTRY=/usr/bin/pinentry
+fi
+echo "enable-ssh-support\npinentry-program $PINENTRY" > ~/.config/gnupg/gpg-agent.conf
 
 gpg --import <(bwget "a060bead-ffdd-4760-a6fa-aca50097b257")
 echo "39905145A381C2119DA34ACDF1A9429A643F4A88:6" | gpg --import-ownertrust
