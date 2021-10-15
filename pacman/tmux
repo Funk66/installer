@@ -1,0 +1,6 @@
+#!/bin/sh
+
+get common/tmux $SCRIPTS/tmux-common.sh
+. $SCRIPTS/tmux.sh
+rm /tmp/tmux.sh
+sed '/. ~\/.config\/zsh\/tmux.zsh/d' ~/.zshrc

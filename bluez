@@ -1,0 +1,17 @@
+Battery level reporting
+
+Having Pipewire report the battery level requires manually enabling an experimental API in the BlueZ Bluetooth stack. This can be done by running sudo systemctl edit bluetooth.service and entering the following lines where the comments prompt you to:
+
+[Service]
+ExecStart=
+ExecStart=/usr/libexec/bluetooth/bluetoothd --experimental
+
+Afterwards, restart BlueZ with sudo systemctl restart bluetooth.service. Now you should be able to see your headset’s battery level in the Power pane of GNOME Settings (from the command line: gnome-control-center power).
+
+
+
+
+properties = {
+    bluez5.msbc-support = true
+    bluez5.sbc-xq-support = true
+}
