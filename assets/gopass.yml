@@ -7,6 +7,6 @@ nocolor: false
 nopager: false
 notifications: true
 safecontent: false
-path: /home/guillermo/.local/share/gopass/stores/root
+path: ~/.local/share/gopass/stores/root
 mounts:
-  kialo: /home/guillermo/.local/share/gopass/stores/kialo
+  kialo: ~/.local/share/gopass/stores/kialo
