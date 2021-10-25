@@ -10,9 +10,6 @@ bwget "fb21d443-4f27-4812-a404-aca401096867" | gpg --import
 echo "0E5F27342AF9AFB6FCE9504635AB7E86500DD327:6" | gpg --import-ownertrust
 gpg --export-ssh-key gga@kialo.com > ~/.ssh/id_card.pub
 chmod 0600 ~/.ssh/id_card.pub
-get assets/zsh/gpg.zsh ~/.config/zsh/gpg.zsh
-echo ". ~/.config/zsh/gpg.zsh" >> ~/.zshrc
-. ~/.config/zsh/gpg.zsh
 grep 'Host kialo.github.com' ~/.ssh/config > /dev/null 2>&1 || cat << EOF >> ~/.ssh/config
 
 Host kialo.github.com
@@ -40,12 +37,13 @@ git clone git@kialo.github.com:kialo/kialo.git $KIALO_ROOT
 cd $KIALO_ROOT || exit
 get assets/kialo/envrc $KIALO_ROOT/../.envrc
 direnv allow
-./direnv/python-$PYTHON_VERSION/bin/pip install flake8 mypy black jedi pynvim msgpack
-./direnv/python-$PYTHON_VERSION/bin/pip install -r $KIALO_ROOT/backend/requirements-dev.txt
+$KIALO_ROOT/../.direnv/python-$PYTHON_VERSION/bin/pip install flake8 mypy black jedi pynvim msgpack awscli
+$KIALO_ROOT/../.direnv/python-$PYTHON_VERSION/bin/pip install -r $KIALO_ROOT/backend/requirements-dev.txt
+echo 'plugin_cache_dir = "$KIALO_ROOT/.terraform.d/plugin-cache"' > $KIALO_ROOT/.terraformrc
 download-binaries
 
 mkdir -p $KIALO_ROOT/.aws
-sed 's/USERNAME/gga/' $KIALO_ROOT/deveopment/aws/aws_config/profiles > $KIALO_ROOT/.aws/config
+/usr/bin/sed 's/USERNAME/gga/' $KIALO_ROOT/development/aws/aws_config_profiles > $KIALO_ROOT/.aws/config
 bwget "1cfa3817-fe47-41b9-a7cd-acae01522f82" > $KIALO_ROOT/.aws/credentials
 chmod 0600 $KIALO_ROOT/.aws/credentials
 
@@ -59,14 +57,14 @@ git config blame.ignoreRevsFile .git-blame-ignore-revs
 pre-commit install -f --install-hooks -t pre-commit -t commit-msg
 
 # TODO: secret
-echo "MFA_SERIAL=arn:aws:iam::123448139561:mfa/gga" > $KIALO_ROOT/.aws/mfa
 cat << EOF >> ~/.config/zsh/aliases.zsh
+export KIALO_ROOT=~/Workspace/kialo/kialo
 alias kk="pushd ~/Workspace/kialo/kialo > /dev/null"
 alias eks=". \$KIALO_ROOT/.kube/eks.zsh"
 alias assume=". \$KIALO_ROOT/.aws/assume.zsh"
 EOF
 
-mkdir -p $KIALO_ROOT/.{aws,kube}
+mkdir -p $KIALO_ROOT/.kube
 chmod 700 $KIALO_ROOT/.{aws,kube}
 get assets/kialo/assume.zsh $KIALO_ROOT/.aws/assume.zsh
 get assets/kialo/eks.zsh $KIALO_ROOT/.kube/eks.zsh
