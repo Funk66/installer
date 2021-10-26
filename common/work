@@ -68,9 +68,19 @@ get assets/kialo/assume.zsh $KIALO_ROOT/.aws/assume.zsh
 get assets/kialo/eks.zsh $KIALO_ROOT/.kube/eks.zsh
 get assets/kialo/kns.zsh $KIALO_ROOT/development/bin/kns
 chmod +x $KIALO_ROOT/development/bin/kns
+
+confgit() {
+    git config user.name "Guillermo Guirao Aguilar"
+    git config user.email "gga@kialo.com"
+    git config user.sigingkey 35AB7E86500DD327
+    git config commit.gpgsign true
+}
+
+confgit()
 popd
 
 git clone git@kialo.github.com:kialo/k8s-resources.git $KIALO_ROOT/../k8s-resources
 pushd $KIALO_ROOT/../k8s-resources
 pre-commit install -f --install-hooks -t pre-commit -t commit-msg
+config()
 popd
