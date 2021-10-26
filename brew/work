@@ -1,0 +1,6 @@
+#!/bin/sh
+
+install ykman gopass gopass-jsonapi pyenv
+setup aws
+get "common/work" "$SCRIPTS/work"
+. "$SCRIPTS/work"
