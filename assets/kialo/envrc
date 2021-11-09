@@ -1,7 +1,8 @@
 #!/bin/bash
 
 export KIALO_ROOT=~/Workspace/kialo/kialo
-export PATH="$KIALO_ROOT/development/bin:$PATH"
+K8SDIR="$(cd "$(dirname "$KIALO_ROOT/../k8s-resources")"; pwd)/$(basename "$KIALO_ROOT/../k8s-resources")"
+export PATH="$K8SDIR/bin:$KIALO_ROOT/development/bin:$PATH"
 export AWS_CONFIG_FILE=$KIALO_ROOT/.aws/credentials
 export AWS_SHARED_CREDENTIALS_FILE=$KIALO_ROOT/.aws/credentials
 export AWS_DEFAULT_REGION=us-east-1

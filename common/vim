@@ -17,7 +17,7 @@ else
   sudo ln -s "$(command -v nvim)" /usr/bin/vim
 fi
 
-pip3 install --upgrade --user flake8 mypy black jedi pynvim msgpack
+pip3 install --upgrade --user flake8 mypy black jedi pynvim msgpack isort
 available npm && sudo npm i -g eslint stylelint neovim
 nvim +PackerSync
 
