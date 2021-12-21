@@ -1,6 +1,7 @@
 #!/bin/bash
 
-install aws-cli
+install aws-cli-v2-bin
 pip install --user --upgrade awsume
 mkdir -p ~/.awsume
 get assets/awsume.yaml ~/.awsume/config.yaml
+echo "complete -C '$(which aws_completer)' aws" >> ~/.zshrc

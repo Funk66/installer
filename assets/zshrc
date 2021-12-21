@@ -37,8 +37,8 @@ bindkey -v
 
 zstyle ':completion:*' special-dirs true
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
-autoload -Uz compinit
-compinit
+autoload bashcompinit && bashcompinit
+autoload -Uz compinit && compinit
 
 autoload -z edit-command-line
 zle -N edit-command-line
