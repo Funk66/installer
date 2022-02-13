@@ -1,6 +1,6 @@
 #!/bin/sh
 
-install ykman gopass gopass-jsonapi pyenv
+install ykman gopass gopass-jsonapi pyenv cairo
 setup aws
 get "common/work" "$SCRIPTS/work"
 . "$SCRIPTS/work"
