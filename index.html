@@ -4,6 +4,7 @@ set -ex
 
 SUDO="$(command -v sudo || true) "
 CONTAINER=$(grep -q docker /proc/self/cgroup 2> /dev/null && echo "true" || true)
+SED=$(which sed)
 
 setup() {
   for PKG in "$@"
@@ -56,8 +57,8 @@ mac() {
 
 sed() {
   if mac
-  then sed -i '' $@
-  else sed -i $@
+  then $SED -i '' $@
+  else $SED -i $@
   fi
 }
 
