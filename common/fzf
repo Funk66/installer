@@ -2,13 +2,7 @@
 
 setup zsh
 
-if mac
-then install fzf
-else
-    mkdir -p ~/.local/bin
-    curl -sSL https://github.com/junegunn/fzf-bin/releases/download/0.23.1/fzf-0.23.1-linux_amd64.tgz | tar -xzC ~/.local/bin
-    chmod +x ~/.local/bin/fzf
-fi
+available fzf || install fzf
 curl -sSL https://raw.githubusercontent.com/junegunn/fzf/master/shell/completion.zsh -o ~/.config/zsh/fzf.zsh
 curl -sSL https://raw.githubusercontent.com/junegunn/fzf/master/shell/key-bindings.zsh >> ~/.config/zsh/fzf.zsh
 grep '. ~/.config/zsh/fzf.zsh' ~/.zshrc || echo '. ~/.config/zsh/fzf.zsh 2> /dev/null' >> ~/.zshrc
