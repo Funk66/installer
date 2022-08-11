@@ -14,10 +14,10 @@ FILE=$KIALO_ROOT/.aws/$ACCOUNT
 if [ ! -f "$FILE" ] || [ "$(find $FILE -mmin +720)" ]
 then
   unset AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY AWS_SESSION_TOKEN AWS_PROFILE
-  MFA_CODE=$(ykman oath accounts code aws | awk '{print $2}')
+  MFA_CODE=$(ykman --device 6931997 oath accounts code aws --single)
   [ -z ${MFA_CODE} ] && return 1
-  ROLE_INFO=($(aws sts assume-role --duration-seconds 43200 --role-arn "arn:aws:iam::${ACCOUNTS[$ACCOUNT]}:role/admin" --role-session-name "cli" --serial-number "$MFA_SERIAL" --token-code "$MFA_CODE" --no-cli-auto-prompt | jq -r ".Credentials[]"))
-  [ "${#ROLE_INFO}" -ne 4 ] && return
+  ROLE_INFO=($(aws sts assume-role --duration-seconds 43200 --role-arn "arn:aws:iam::${ACCOUNTS[$ACCOUNT]}:role/admin" --role-session-name "cli" --serial-number "$MFA_SERIAL" --token-code "$MFA_CODE" --no-cli-auto-prompt --query "Credentials.[AccessKeyId,SecretAccessKey,SessionToken]" --output text))
+  [ "${#ROLE_INFO}" -ne 3 ] && return
   cat << EOF >! $FILE
 export AWS_ACCESS_KEY_ID=${ROLE_INFO[1]}
 export AWS_SECRET_ACCESS_KEY=${ROLE_INFO[2]}
