@@ -60,6 +60,7 @@ export KIALO_ROOT=~/Workspace/kialo/kialo
 alias kk="pushd ~/Workspace/kialo/kialo > /dev/null"
 alias eks=". \$KIALO_ROOT/.kube/eks.zsh"
 alias assume=". \$KIALO_ROOT/.aws/assume.zsh"
+alias otp="ykman --device 6931997 oath accounts code aws --single | pbcopy"
 EOF
 
 mkdir -p $KIALO_ROOT/.kube
