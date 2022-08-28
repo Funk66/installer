@@ -19,3 +19,8 @@ if available nvim
 then
   sed "s/EDITOR='vi'/EDITOR='nvim'/" ~/.zshrc
 fi
+
+if ! mac
+then
+    sudo ln -s /usr/bin/zsh /bin/zsh
+fi

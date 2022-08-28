@@ -1,4 +1,4 @@
-#!/usr/bin/zsh
+#!/bin/zsh
 
 [ -z "$KUBECONFIG" ] && echo "No context" && return 1
 CONTEXT=$(echo "$KUBECONFIG" | cut -d '/' -f 8)

@@ -1,4 +1,4 @@
-#!/usr/bin/zsh
+#!/bin/zsh
 
 typeset -A CLUSTERS=(
   development "development    us-east-1    namespace"

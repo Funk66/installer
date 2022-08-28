@@ -1,4 +1,4 @@
-#!/usr/bin/zsh
+#!/bin/zsh
 
 typeset -A ACCOUNTS=(
   development 1234567890
