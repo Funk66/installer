@@ -1,12 +1,12 @@
 #!/bin/bash
 
-export KIALO_ROOT=~/Workspace/kialo/kialo
-K8SDIR="$(cd "$(dirname "$KIALO_ROOT/../k8s-resources")"; pwd)/$(basename "$KIALO_ROOT/../k8s-resources")"
-export PATH="$K8SDIR/bin:$KIALO_ROOT/development/bin:$PATH"
+KIALO_DIR=~/Workspace/kialo
+export KIALO_ROOT=$KIALO_DIR/kialo
+export PATH="$KIALO_DIR/k8s-resources/bin:$KIALO_ROOT/development/bin:$KIALO_DIR/bin:$PATH"
 export AWS_CONFIG_FILE=$KIALO_ROOT/.aws/credentials
 export AWS_SHARED_CREDENTIALS_FILE=$KIALO_ROOT/.aws/credentials
 export AWS_DEFAULT_REGION=us-east-1
 export TF_CLI_CONFIG_FILE=$KIALO_ROOT/.terraformrc
 export MFA_SERIAL=arn:aws:iam::123448139561:mfa/gga
 
-layout python ~/.pyenv/versions/3.9.6/bin/python
+layout python ~/.pyenv/versions/3.10.4/bin/python

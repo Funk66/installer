@@ -25,7 +25,7 @@ get assets/gopass.yml ~/.config/gopass/config.yml
 gopass sync
 
 install pyenv
-PYTHON_VERSION=3.9.9
+PYTHON_VERSION=3.10.4
 pyenv install $PYTHON_VERSION
 
 export KIALO_ROOT=~/Workspace/kialo/kialo
@@ -40,9 +40,10 @@ echo 'plugin_cache_dir = "$KIALO_ROOT/.terraform.d/plugin-cache"' > $KIALO_ROOT/
 download-binaries
 pre-commit install -f --install-hooks -t pre-commit -t commit-msg -t pre-push
 
+mkdir $KIALO_ROOT/../bin
+
 mkdir -p $KIALO_ROOT/.aws
-/usr/bin/sed 's/USERNAME/gga/' $KIALO_ROOT/development/aws/aws_config_profiles > $KIALO_ROOT/.aws/config
-bwget "1cfa3817-fe47-41b9-a7cd-acae01522f82" > $KIALO_ROOT/.aws/credentials
+gopass -n aws/credentials > $KIALO_ROOT/.aws/credentials
 chmod 0600 $KIALO_ROOT/.aws/credentials
 
 get assets/kialo/vimrc $KIALO_ROOT/.vimrc
@@ -54,21 +55,20 @@ git config blame.ignoreRevsFile .git-blame-ignore-revs
 
 pre-commit install -f --install-hooks -t pre-commit -t commit-msg
 
-# TODO: secret
-cat << EOF >> ~/.config/zsh/aliases.zsh
-export KIALO_ROOT=~/Workspace/kialo/kialo
-alias kk="pushd ~/Workspace/kialo/kialo > /dev/null"
-alias eks=". \$KIALO_ROOT/.kube/eks.zsh"
-alias assume=". \$KIALO_ROOT/.aws/assume.zsh"
+cat << EOF >>  /dev/null > ~/.config/zsh/aliases.zsh
+alias k='kubectl'
+alias kk='pushd ~/Workspace/kialo/kialo > /dev/null'
+alias k8='pushd ~/Workspace/kialo/k8s-resources > /dev/null'
 alias otp="ykman --device 6931997 oath accounts code aws --single | pbcopy"
 EOF
 
 mkdir -p $KIALO_ROOT/.kube
 chmod 700 $KIALO_ROOT/.{aws,kube}
-get assets/kialo/assume.zsh $KIALO_ROOT/.aws/assume.zsh
-get assets/kialo/eks.zsh $KIALO_ROOT/.kube/eks.zsh
-get assets/kialo/kns.zsh $KIALO_ROOT/development/bin/kns
-chmod +x $KIALO_ROOT/development/bin/kns
+gopass -n aws/assume > $KIALO_DIR/../bin/assume
+gopass -n aws/eks > $KIALO_DIR/../bin/eks
+get assets/kialo/kns.zsh $KIALO_ROOT/../bin/kns
+get assets/kialo/rotate_aws.zsh $KIALO_ROOT/../bin/rotate_aws
+chmod +x $KIALO_ROOT/../bin/{kns,rotate_aws,assume,eks}
 
 confgit() {
     git config user.name "Guillermo Guirao Aguilar"
