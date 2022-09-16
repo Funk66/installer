@@ -1,0 +1,6 @@
+#!/bin/sh
+
+if mac
+  then install rust
+  else install cargo
+fi

@@ -1,28 +1,19 @@
 #!/bin/sh
 
-setup git fonts python
+setup git fonts python node rust
 
-install neovim
-# TODO: if gpg key present, clone git@github
-[ -d ~/.config/nvim ] || git clone --depth=1 https://github.com/Funk66/vim.git ~/.config/nvim
-git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim
+install neovim curl
 
-if [ -f /usr/bin/vim ]
-then
-  if [ ! -f ~/.local/bin/vim ]
-  then
-    mkdir -p ~/.local/bin
-    ln -s "$(command -v nvim)" ~/.local/bin/vim
-  fi
-else
-  sudo ln -s "$(command -v nvim)" /usr/bin/vim
-fi
-
-pip3 install --upgrade --user flake8 mypy black jedi pynvim msgpack isort
-available npm && sudo npm i -g eslint stylelint neovim
-nvim +PackerSync
+bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/install.sh) -y
 
 if [ -f ~/.zshrc ]
 then
-  sed "s/EDITOR='vi'/EDITOR='nvim'/" ~/.zshrc
+  sed "s/EDITOR='vi'/EDITOR='lvim'/" ~/.zshrc
+  echo "alias vim=lvim" >> ~/.config/zsh/aliases.zsh
+  . ~/.config/zsh/aliases.zsh
 fi
+
+mkdir -p ~/.config/lvim/
+get assets/lvim.lua ~/.config/lvim/config.lua
+
+"~/.local/bin/lvim" --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
