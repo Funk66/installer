@@ -1,6 +1,11 @@
 #!/bin/sh
 
-if mac
-  then install rust
-  else install cargo
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+
+rm .zshenv
+if [ -f ~/.zshrc ]
+then
+  grep '. ~/.config/cargo/env' ~/.zshrc || echo ". ~/.config/cargo/env" >> ~/.zshrc
 fi
+
+install rustfmt

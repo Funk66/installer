@@ -22,6 +22,7 @@ EOF
 git clone git@kialo.github.com:gga-kialo/secrets.git ~/.local/share/gopass/stores/root
 git clone git@kialo.github.com:kialo/secrets.git ~/.local/share/gopass/stores/kialo
 get assets/gopass.yml ~/.config/gopass/config.yml
+sed "s|~|$HOME|" ~/.config/gopass/config.yml
 gopass sync
 
 install pyenv
