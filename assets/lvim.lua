@@ -1,5 +1,6 @@
 lvim.keys.normal_mode["<S-l>"] = ":BufferLineCycleNext<CR>"
 lvim.keys.normal_mode["<S-h>"] = ":BufferLineCyclePrev<CR>"
+lvim.builtin.which_key.mappings[";"] = {}
 lvim.builtin.which_key.mappings.b.b = { "<cmd>buffer #<CR>", "Previous buffer" }
 lvim.builtin.which_key.mappings.Q = { "<cmd>qa<CR>", "Quit all" }
 lvim.builtin.which_key.mappings.g.f = { ":DiffviewFileHistory %<CR>", "File history" }
@@ -13,6 +14,9 @@ lvim.builtin.bufferline.options.show_buffer_close_icons = false
 lvim.builtin.alpha.active = false
 lvim.builtin.notify.active = true
 lvim.builtin.terminal.active = true
+vim.opt.foldmethod = "expr"
+vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+vim.opt.foldenable = false
 
 lvim.builtin.treesitter.auto_install = true
 
@@ -24,6 +28,7 @@ lvim.lsp.float.border = "rounded"
 lvim.lsp.automatic_configuration.skipped_servers = vim.tbl_filter(function(server)
   return server ~= "jedi_language_server"
 end, lvim.lsp.automatic_configuration.skipped_servers)
+vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "pyright" })
 
 require("lvim.lsp.null-ls.formatters").setup {
   { command = "black",
