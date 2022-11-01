@@ -12,7 +12,6 @@ lvim.builtin.which_key.mappings.g.t = {
 
 lvim.builtin.bufferline.options.show_buffer_close_icons = false
 lvim.builtin.alpha.active = false
-lvim.builtin.notify.active = true
 lvim.builtin.terminal.active = true
 vim.opt.foldmethod = "expr"
 vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
@@ -59,5 +58,4 @@ require("lvim.lsp.null-ls.linters").setup {
 
 lvim.plugins = {
   { "sindrets/diffview.nvim" },
-  { "lukas-reineke/indent-blankline.nvim" },
 }
