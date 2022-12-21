@@ -54,6 +54,15 @@ require("lvim.lsp.null-ls.linters").setup {
       }
     end,
   },
+  { command = "mypy",
+    filetypes = { "python" },
+    extra_args = function(params)
+      return {
+        "--config-file",
+        params.bufname:match("kialo") and os.getenv("KIALO_ROOT") .. "/backend/mypy.ini" or "mypy.ini",
+      }
+    end,
+  },
 }
 
 lvim.plugins = {
