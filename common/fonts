@@ -6,17 +6,18 @@ install zip unzip
 
 available fc-cache || install fontconfig
 NERDFONT=$(mktemp)
-curl -L --progress-bar https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/JetBrainsMono.zip -o "$NERDFONT"
-sudo mkdir -p /usr/share/fonts/nerdfonts
-sudo unzip -o -q "$NERDFONT" -d /usr/share/fonts/nerdfonts
+[ mac ] && FONTDIR=/Library/Fonts || FONTDIR=/usr/share/fonts
+curl -L --progress-bar https://github.com/ryanoasis/nerd-fonts/releases/download/v2.3.0/JetBrainsMono.zip -o "$NERDFONT"
+sudo mkdir -p "$FONTDIR/nerdfonts"
+sudo unzip -o -q "$NERDFONT" -d "$FONTDIR/nerdfonts"
 get assets/fontconfig/local.conf local.conf
-sudo mv local.conf /etc/fonts/local.conf
-fc-cache -vf /usr/share/fonts/nerdfonts
-sudo rm -f "$NERDFONT" /usr/share/fonts/nerdfonts/*Windows*
+[ mac ] || sudo mv local.conf /etc/fonts/local.conf
+sudo rm -f "$NERDFONT" "$FONTDIR/nerdfonts/*Windows*"
+fc-cache -vf "$FONTDIR/nerdfonts"
 
 if available gnome-terminal
 then
   PROFILE=$(gsettings get org.gnome.Terminal.ProfilesList default | tr -d "'")
-  gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$PROFILE/ font 'JetBrainsMono Nerd Font Regular 12'
-  gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$PROFILE/ use-system-font false
+  gsettings set "org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$PROFILE/" font 'JetBrainsMono Nerd Font Regular 12'
+  gsettings set "org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$PROFILE/" use-system-font false
 fi
