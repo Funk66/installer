@@ -11,6 +11,7 @@ lvim.builtin.which_key.mappings.g.t = {
 }
 
 lvim.builtin.bufferline.options.show_buffer_close_icons = false
+lvim.builtin.dap.active = true
 lvim.builtin.alpha.active = false
 lvim.builtin.terminal.active = true
 vim.opt.foldmethod = "expr"
@@ -65,6 +66,21 @@ require("lvim.lsp.null-ls.linters").setup {
   },
 }
 
+-- Python
+local mason_path = vim.fn.glob(vim.fn.stdpath "data" .. "/mason/")
+pcall(function() require("dap-python").setup(mason_path .. "packages/debugpy/venv/bin/python") end)
+
+require('dap').configurations.python = {
+  {
+    type = 'python';
+    request = 'launch';
+    name = "Launch file";
+    program = "${file}";
+  },
+}
+
+
 lvim.plugins = {
   { "sindrets/diffview.nvim" },
+  { "mfussenegger/nvim-dap-python" },
 }
