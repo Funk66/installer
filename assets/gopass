@@ -1,0 +1,19 @@
+# vim: ft=dosini
+
+[core]
+	showsafecontent = false
+	parsing = true
+	autoclip = false
+	nopager = false
+	cliptimeout = 45
+	autoimport = true
+	notifications = true
+	exportkeys = true
+[age]
+	usekeychain = false
+[mounts]
+	path = ~/.local/share/gopass/stores/root
+[mounts "kialo"]
+	path = ~/.local/share/gopass/stores/kialo
+[mounts "kialo-principal"]
+	path = ~/.local/share/gopass/stores/kialo-principal
