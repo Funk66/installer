@@ -1,24 +1,34 @@
 lvim.keys.normal_mode["<S-l>"] = ":BufferLineCycleNext<CR>"
 lvim.keys.normal_mode["<S-h>"] = ":BufferLineCyclePrev<CR>"
+lvim.builtin.which_key.mappings[";"] = {}
 lvim.builtin.which_key.mappings.b.b = { "<cmd>buffer #<CR>", "Previous buffer" }
 lvim.builtin.which_key.mappings.Q = { "<cmd>qa<CR>", "Quit all" }
+lvim.builtin.which_key.mappings.g.f = { ":DiffviewFileHistory %<CR>", "File history" }
+lvim.builtin.which_key.mappings.g.F = { ":DiffviewClose<CR>", "Close diffview" }
 lvim.builtin.which_key.mappings.g.t = {
   "<cmd>lua require 'gitsigns'.toggle_current_line_blame()<CR>",
   "Toggle line blame"
 }
 
 lvim.builtin.bufferline.options.show_buffer_close_icons = false
+lvim.builtin.dap.active = true
 lvim.builtin.alpha.active = false
-lvim.builtin.notify.active = true
 lvim.builtin.terminal.active = true
+vim.opt.foldmethod = "expr"
+vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+vim.opt.foldenable = false
+
+lvim.builtin.treesitter.auto_install = true
 
 lvim.builtin.mason.ui.border = "rounded"
 
 lvim.lsp.installer.setup.ui = { border = "rounded" }
 lvim.lsp.float.border = "rounded"
 
--- TODO: remove from skipped servers
-lvim.lsp.installer.setup.ensure_installed = { "jedi_language_server" }
+lvim.lsp.automatic_configuration.skipped_servers = vim.tbl_filter(function(server)
+  return server ~= "jedi_language_server"
+end, lvim.lsp.automatic_configuration.skipped_servers)
+vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "pyright" })
 
 require("lvim.lsp.null-ls.formatters").setup {
   { command = "black",
@@ -45,38 +55,32 @@ require("lvim.lsp.null-ls.linters").setup {
       }
     end,
   },
+  { command = "mypy",
+    filetypes = { "python" },
+    extra_args = function(params)
+      return {
+        "--config-file",
+        params.bufname:match("kialo") and os.getenv("KIALO_ROOT") .. "/backend/mypy.ini" or "mypy.ini",
+      }
+    end,
+  },
 }
 
--- TODO: merge dicts
-require("lvim.lsp.manager").setup("yamlls", {
-  settings = {
-    yaml = {
-      hover = true,
-      completion = true,
-      validate = true,
-      schemaStore = {
-        enable = true,
-        url = "https://www.schemastore.org/api/json/catalog.json",
-      },
-      schemas = {
-        kubernetes = {
-          "daemon.{yml,yaml}",
-          "manager.{yml,yaml}",
-          "restapi.{yml,yaml}",
-          "role.{yml,yaml}",
-          "role_binding.{yml,yaml}",
-          "*onfigma*.{yml,yaml}",
-          "*ngres*.{yml,yaml}",
-          "*ecre*.{yml,yaml}",
-          "*eployment*.{yml,yaml}",
-          "*ervic*.{yml,yaml}",
-          "kubectl-edit*.yaml",
-          "manifests/**/*yaml",
-        },
-        ["https://json.schemastore.org/github-workflow.json"] = "/.github/workflows/*.{yml,yaml}",
-        ["https://json.schemastore.org/pre-commit-config.json"] = "/.pre-commit-config.yaml",
-        ["https://json.schemastore.org/kustomization.json"] = "*/kustomization.yaml",
-      },
-    },
+-- Python
+local mason_path = vim.fn.glob(vim.fn.stdpath "data" .. "/mason/")
+pcall(function() require("dap-python").setup(mason_path .. "packages/debugpy/venv/bin/python") end)
+
+require('dap').configurations.python = {
+  {
+    type = 'python';
+    request = 'launch';
+    name = "Launch file";
+    program = "${file}";
   },
-})
+}
+
+
+lvim.plugins = {
+  { "sindrets/diffview.nvim" },
+  { "mfussenegger/nvim-dap-python" },
+}

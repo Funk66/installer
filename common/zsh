@@ -17,7 +17,7 @@ fi
 
 if available nvim
 then
-  sed "s/EDITOR='vi'/EDITOR='nvim'/" ~/.zshrc
+  sed "s/EDITOR='vi'/EDITOR='lvim'/" ~/.zshrc
 fi
 
 if ! mac
