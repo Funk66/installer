@@ -1,7 +1,7 @@
 #!/bin/zsh
 
 [ -z "$KUBECONFIG" ] && echo "No context" && return 1
-CONTEXT=$(echo "$KUBECONFIG" | cut -d '/' -f 8)
+CONTEXT=$(echo "$KUBECONFIG" | cut -d '/' -f 8 | sed -E 's/-[a-z]+$//')
 CACHE="${KIALO_ROOT}/.kube/${CONTEXT}-ns"
 NAMESPACE="$(kubectl config view -o jsonpath="{.contexts[0].context.namespace}")"
 [ "$NAMESPACE" = "$1" ] && return
