@@ -2,18 +2,29 @@
 
 setup git fonts python node rust
 
-install neovim curl
-
-bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/install.sh) -y
-
-if [ -f ~/.zshrc ]
-then
-  sed "s/EDITOR='vi'/EDITOR='lvim'/" ~/.zshrc
-  echo "alias vim=lvim" >> ~/.config/zsh/aliases.zsh
-  . ~/.config/zsh/aliases.zsh
+if [ "$INSTALLER" = "apt" ]; then
+	SRC=$(mktemp -d)
+	install cmake gettext
+	git clone https://github.com/neovim/neovim "$SRC"
+	cd "$SRC" || exit
+	git checkout stable
+	make CMAKE_BUILD_TYPE=Release
+	sudo make install
+	cp build/bin/nvim /usr/local/bin/nvim
+	cd - || exit
+else
+	install neovim
 fi
 
-mkdir -p ~/.config/lvim/
-get assets/lvim.lua ~/.config/lvim/config.lua
+if [ -d ~/.config/nvim ]; then
+	mv ~/.config/nvim "$HOME/.config/nvim-$(date +%Y%m%d)"
+fi
 
-"~/.local/bin/lvim" --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
+git clone https://github.com/funk66/vim ~/.config/nvim
+
+if [ -f ~/.zshrc ]; then
+	sed "s/EDITOR='vi'/EDITOR='nvim'/" ~/.zshrc
+	echo "alias vim=nvim" >>~/.config/zsh/aliases.zsh
+	# shellcheck source=assets/zsh/aliases.zsh
+	. ~/.config/zsh/aliases.zsh
+fi
