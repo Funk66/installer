@@ -10,7 +10,7 @@ if [ "$INSTALLER" = "apt" ]; then
 	git checkout stable
 	make CMAKE_BUILD_TYPE=Release
 	sudo make install
-	cp build/bin/nvim /usr/local/bin/nvim
+	sudo cp build/bin/nvim /usr/local/bin/nvim
 	cd - || exit
 else
 	install neovim

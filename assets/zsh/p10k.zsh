@@ -123,6 +123,7 @@
     .node-version
     .python-version
     .go-version
+    .lua-version
     .tool-version
     .shorten_folder_marker
     .svn
