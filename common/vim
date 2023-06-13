@@ -4,7 +4,7 @@ setup git fonts python node rust
 
 if [ "$INSTALLER" = "apt" ]; then
 	SRC=$(mktemp -d)
-	install cmake gettext
+	install cmake gettext python3-venv python3-pip
 	git clone https://github.com/neovim/neovim "$SRC"
 	cd "$SRC" || exit
 	git checkout stable
