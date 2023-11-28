@@ -2,7 +2,7 @@
 
 setup yay
 
-install yubikey-manager gopass python-snappy
+install yubikey-manager gopass
 yay -S --noconfirm aws-sam-cli aws-session-manager-plugin gopass-jsonapi-git
 get "common/work" "$SCRIPTS/work"
 . "$SCRIPTS/work"
