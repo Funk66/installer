@@ -27,7 +27,7 @@ sed "s|~|$HOME|" ~/.config/gopass/config
 gopass sync
 
 install pyenv
-PYTHON_VERSION=3.10.4
+PYTHON_VERSION=3.11.6
 pyenv install $PYTHON_VERSION
 
 export KIALO_ROOT=~/Workspace/kialo/kialo

@@ -9,4 +9,4 @@ export AWS_DEFAULT_REGION=us-east-1
 export TF_CLI_CONFIG_FILE=$KIALO_ROOT/.terraformrc
 export MFA_SERIAL=arn:aws:iam::123448139561:mfa/gga
 
-layout python ~/.pyenv/versions/3.10.4/bin/python
+layout python ~/.pyenv/versions/3.11.6/bin/python
