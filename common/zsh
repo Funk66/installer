@@ -3,7 +3,7 @@
 setup git fonts
 
 available zsh || install zsh
-mkdir -p ~/.local/zsh
+mkdir -p ~/.config/zsh
 get assets/zshrc ~/.zshrc
 get assets/zsh/p10k.zsh ~/.config/zsh/p10k.zsh
 get assets/zsh/aliases.zsh ~/.config/zsh/aliases.zsh

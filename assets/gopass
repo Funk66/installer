@@ -15,5 +15,3 @@
 	path = ~/.local/share/gopass/stores/root
 [mounts "kialo"]
 	path = ~/.local/share/gopass/stores/kialo
-[mounts "kialo-principal"]
-	path = ~/.local/share/gopass/stores/kialo-principal

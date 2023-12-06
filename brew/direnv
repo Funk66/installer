@@ -1,7 +1,5 @@
 #!/bin/bash
 
-setup yay
-
-yay -S --noconfirm direnv
+brew install direnv
 get "common/direnv" "$SCRIPTS/direnv"
 . "$SCRIPTS/direnv"

@@ -1,6 +1,0 @@
-#!/bin/sh
-
-brew install stylua shfmt hadolint
-npm i -g eslint_d
-get "common/vim" "$SCRIPTS/vim"
-. "$SCRIPTS/vim"

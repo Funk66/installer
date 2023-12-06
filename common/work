@@ -1,8 +1,13 @@
-#!/bin/sh
+#!/bin/zsh
 
 setup bw gpg direnv
 
-sudo systemctl enable --now pcscd.service
+[ mac ] && ARGS=--ignore-dependencies || ARGS=
+install yarn "$ARGS"
+
+if [ ! mac ]; then
+  sudo systemctl enable --now pcscd.service
+fi
 gpg --card-status || (echo "Cannot detect Yubikey" && exit 1)
 
 bwget "fb21d443-4f27-4812-a404-aca401096867" | gpg --import
@@ -21,26 +26,26 @@ EOF
 
 git clone git@kialo.github.com:gga-kialo/secrets.git ~/.local/share/gopass/stores/root
 git clone git@kialo.github.com:kialo/secrets.git ~/.local/share/gopass/stores/kialo
-git clone git@kialo.github.com:kialo/secrets-principal.git ~/.local/share/gopass/stores/kialo-principal
 get assets/gopass ~/.config/gopass/config
 sed "s|~|$HOME|" ~/.config/gopass/config
 gopass sync
 
 install pyenv
-PYTHON_VERSION=3.11.6
-pyenv install $PYTHON_VERSION
 
 export KIALO_ROOT=~/Workspace/kialo/kialo
 mkdir -p ~/Workspace/kialo/kialo
 git clone git@kialo.github.com:kialo/kialo.git $KIALO_ROOT
+PYTHON_VERSION=$(cat $KIALO_ROOT/.python-version)
+pyenv install "$PYTHON_VERSION"
 pushd $KIALO_ROOT || exit
-get assets/kialo/envrc $KIALO_ROOT/../.envrc
+gopass -n tools/envrc > $KIALO_ROOT/../.envrc
 direnv allow
-$KIALO_ROOT/../.direnv/python-$PYTHON_VERSION/bin/pip install flake8 mypy black jedi pynvim msgpack awscli
-$KIALO_ROOT/../.direnv/python-$PYTHON_VERSION/bin/pip install -r $KIALO_ROOT/backend/requirements-dev.txt
+python -m venv $KIALO_ROOT/../.direnv/poetry
+npm install
+npm run setup:backend
 echo 'plugin_cache_dir = "$KIALO_ROOT/.terraform.d/plugin-cache"' > $KIALO_ROOT/.terraformrc
+mkdir -p $KIALO_ROOT/.terraform.d/plugin-cache
 download-binaries
-pre-commit install -f --install-hooks -t pre-commit -t commit-msg -t pre-push
 
 mkdir $KIALO_ROOT/../bin
 
@@ -50,40 +55,38 @@ chmod 0600 $KIALO_ROOT/.aws/credentials
 
 get assets/kialo/vimrc $KIALO_ROOT/.vimrc
 
-git config user.name 'Guillermo Guirao Aguilar'
-git config user.email 'gga@kialo.com'
-git config commit.gpgsign true
-git config blame.ignoreRevsFile .git-blame-ignore-revs
-
-pre-commit install -f --install-hooks -t pre-commit -t commit-msg
-
-cat << EOF >>  /dev/null > ~/.config/zsh/aliases.zsh
-alias k='kubectl'
-alias kk='pushd ~/Workspace/kialo/kialo > /dev/null'
-alias k8='pushd ~/Workspace/kialo/k8s-resources > /dev/null'
-alias otp="ykman --device 6931997 oath accounts code aws --single | pbcopy"
-EOF
-
-mkdir -p $KIALO_ROOT/.kube
-chmod 700 $KIALO_ROOT/.{aws,kube}
-gopass -n aws/assume > $KIALO_DIR/../bin/assume
-gopass -n aws/eks > $KIALO_DIR/../bin/eks
-get assets/kialo/kns.zsh $KIALO_ROOT/../bin/kns
-get assets/kialo/rotate_aws.zsh $KIALO_ROOT/../bin/rotate_aws
-chmod +x $KIALO_ROOT/../bin/{kns,rotate_aws,assume,eks}
-
 confgit() {
     git config user.name "Guillermo Guirao Aguilar"
     git config user.email "gga@kialo.com"
     git config user.sigingkey 35AB7E86500DD327
     git config commit.gpgsign true
+    git config blame.ignoreRevsFile .git-blame-ignore-revs
+    pre-commit install -f --install-hooks -t pre-commit -t commit-msg
 }
 
-confgit()
+confgit
+
+cat << EOF >> ~/.config/zsh/aliases.zsh
+alias k='kubectl'
+alias kk='pushd ~/Workspace/kialo/kialo > /dev/null'
+alias k8='pushd ~/Workspace/kialo/k8s-resources > /dev/null'
+alias assume='. $KIALO_ROOT/.aws/assume'
+alias eks='. $KIALO_ROOT/.kube/eks.zsh'
+EOF
+
+mkdir -p $KIALO_ROOT/.{aws,kube}
+chmod 700 $KIALO_ROOT/.{aws,kube}
+gopass -n aws/assume > $KIALO_ROOT/.aws/assume
+gopass -n tools/eks.zsh > $KIALO_ROOT/.kube/eks.zsh
+gopass -n aws/credentials > $KIALO_ROOT/.aws/credentials
+get assets/kialo/kns.zsh $KIALO_ROOT/../bin/kns
+get assets/kialo/rotate_aws.zsh $KIALO_ROOT/../bin/rotate_aws
+chmod +x $KIALO_ROOT/../bin/{kns,rotate_aws,assume,eks}
+
 popd
 
 git clone git@kialo.github.com:kialo/k8s-resources.git $KIALO_ROOT/../k8s-resources
 pushd $KIALO_ROOT/../k8s-resources
-pre-commit install -f --install-hooks -t pre-commit -t commit-msg
-config()
+confgit
+$KIALO_ROOT/../.direnv/python-$PYTHON_VERSION/bin/pip install -r $KIALO_ROOT/../k8s-resources/requirements.txt
 popd
