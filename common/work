@@ -53,12 +53,10 @@ mkdir -p $KIALO_ROOT/.aws
 gopass -n aws/credentials > $KIALO_ROOT/.aws/credentials
 chmod 0600 $KIALO_ROOT/.aws/credentials
 
-get assets/kialo/vimrc $KIALO_ROOT/.vimrc
-
 confgit() {
     git config user.name "Guillermo Guirao Aguilar"
     git config user.email "gga@kialo.com"
-    git config user.sigingkey 35AB7E86500DD327
+    git config user.signingkey E152A4F19F57F9BD
     git config commit.gpgsign true
     git config blame.ignoreRevsFile .git-blame-ignore-revs
     pre-commit install -f --install-hooks -t pre-commit -t commit-msg
@@ -70,18 +68,17 @@ cat << EOF >> ~/.config/zsh/aliases.zsh
 alias k='kubectl'
 alias kk='pushd ~/Workspace/kialo/kialo > /dev/null'
 alias k8='pushd ~/Workspace/kialo/k8s-resources > /dev/null'
-alias assume='. $KIALO_ROOT/.aws/assume'
+alias assume='. $KIALO_ROOT/development/aws/assume_role.sh'
 alias eks='. $KIALO_ROOT/.kube/eks.zsh'
 EOF
 
 mkdir -p $KIALO_ROOT/.{aws,kube}
 chmod 700 $KIALO_ROOT/.{aws,kube}
-gopass -n aws/assume > $KIALO_ROOT/.aws/assume
 gopass -n tools/eks.zsh > $KIALO_ROOT/.kube/eks.zsh
 gopass -n aws/credentials > $KIALO_ROOT/.aws/credentials
 get assets/kialo/kns.zsh $KIALO_ROOT/../bin/kns
 get assets/kialo/rotate_aws.zsh $KIALO_ROOT/../bin/rotate_aws
-chmod +x $KIALO_ROOT/../bin/{kns,rotate_aws,assume,eks}
+chmod +x $KIALO_ROOT/../bin/{kns,rotate_aws,eks}
 
 popd
 
