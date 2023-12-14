@@ -34,6 +34,8 @@
   back = checkout -
   go = "!f() { git switch $(git branch | fzf -1 --height 7 --reverse --query=\"$1\" | tr -d '([:space:]|*)'); }; f"
   s = status
+  del = !git branch --merged | grep 'PM-' | xargs -n 1 git branch -d
+  fix = !git commit --amend --no-edit
 [push]
   default = current
 [color]

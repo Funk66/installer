@@ -72,6 +72,11 @@ alias assume='. $KIALO_ROOT/development/aws/assume_role.sh'
 alias eks='. $KIALO_ROOT/.kube/eks.zsh'
 EOF
 
+cat << EOF >> ~/.zshrc
+source <(kubectl completion zsh)
+complete -o default -F __start_kubectl k
+EOF
+
 mkdir -p $KIALO_ROOT/.{aws,kube}
 chmod 700 $KIALO_ROOT/.{aws,kube}
 gopass -n tools/eks.zsh > $KIALO_ROOT/.kube/eks.zsh
@@ -87,3 +92,17 @@ pushd $KIALO_ROOT/../k8s-resources
 confgit
 $KIALO_ROOT/../.direnv/python-$PYTHON_VERSION/bin/pip install -r $KIALO_ROOT/../k8s-resources/requirements.txt
 popd
+
+cat << EOF >> $KIALO_ROOT/.git/hooks/prepare-commit-msg
+#!/bin/sh
+
+TICKET_NUM=\$(git rev-parse --symbolic-full-name --abbrev-ref HEAD | grep -Eo 'PM-\d{5}')
+if [ -n "\$TICKET_NUM" ]; then
+  COMMIT_MSG=\$(cat "\$1")
+  if ! echo "\$COMMIT_MSG" | grep -qE '^(PM-\d{5}|Merge|Revert|\[)'; then
+    echo "\$TICKET_NUM \$COMMIT_MSG" > "\$1"
+  fi
+fi
+EOF
+chmod +x $KIALO_ROOT/.git/hooks/prepare-commit-msg
+ln -s $KIALO_ROOT/.git/hooks/prepare-commit-msg $KIALO_ROOT/../k8s-resources/.git/hooks/prepare-commit-msg
