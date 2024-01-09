@@ -15,13 +15,13 @@
 [pull]
   rebase = false
 [mergetool]
-  path = lvim
+  path = nvim
   trustExitCode = true
 [merge]
   tool = vimdiff
   conflictstyle = diff3
 [mergetool "vimdiff"]
-  path = lvim
+  path = nvim
 [diff]
   tool = vimdiff
   colorMoved = default
