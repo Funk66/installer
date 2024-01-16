@@ -39,6 +39,8 @@ PYTHON_VERSION=$(cat $KIALO_ROOT/.python-version)
 pyenv install "$PYTHON_VERSION"
 pushd $KIALO_ROOT || exit
 gopass -n tools/envrc > $KIALO_ROOT/../.envrc
+gopass -n tools/kialo/envrc > $KIALO_ROOT/.envrc
+gopass -n tools/k8s-resources/envrc > $KIALO_ROOT/../k8s-resources/.envrc
 direnv allow
 python -m venv $KIALO_ROOT/../.direnv/poetry
 npm install
