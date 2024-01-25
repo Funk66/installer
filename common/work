@@ -32,30 +32,25 @@ gopass sync
 
 install pyenv
 
-export KIALO_ROOT=~/Workspace/kialo/kialo
-mkdir -p ~/Workspace/kialo/kialo
+export KIALO_DIR=~/Workspace/kialo
+export KIALO_ROOT=$KIALO_DIR/kialo
+mkdir -p ~/Workspace/kialo
 git clone git@kialo.github.com:kialo/kialo.git $KIALO_ROOT
 PYTHON_VERSION=$(cat $KIALO_ROOT/.python-version)
 pyenv install "$PYTHON_VERSION"
-pushd $KIALO_ROOT || exit
-gopass -n tools/envrc > $KIALO_ROOT/../.envrc
-gopass -n tools/kialo/envrc > $KIALO_ROOT/.envrc
-gopass -n tools/k8s-resources/envrc > $KIALO_ROOT/../k8s-resources/.envrc
-direnv allow
-python -m venv $KIALO_ROOT/../.direnv/poetry
-npm install
-npm run setup:backend
-echo 'plugin_cache_dir = "$KIALO_ROOT/.terraform.d/plugin-cache"' > $KIALO_ROOT/.terraformrc
-mkdir -p $KIALO_ROOT/.terraform.d/plugin-cache
-download-binaries
+gopass -n tools/envrc > $KIALO_DIR/.envrc
 
-mkdir $KIALO_ROOT/../bin
-
+mkdir $KIALO_DIR/bin
 mkdir -p $KIALO_ROOT/.aws
 gopass -n aws/credentials > $KIALO_ROOT/.aws/credentials
 chmod 0600 $KIALO_ROOT/.aws/credentials
 
-confgit() {
+confrepo() {
+    local REPO = $1
+    pushd $KIALO_DIR/$REPO || exit
+    gopass -n tools/$REPO/envrc > $KIALO_DIR/$REPO/.envrc
+    direnv allow
+    poetry install
     git config user.name "Guillermo Guirao Aguilar"
     git config user.email "gga@kialo.com"
     git config user.signingkey E152A4F19F57F9BD
@@ -64,7 +59,29 @@ confgit() {
     pre-commit install -f --install-hooks -t pre-commit -t commit-msg
 }
 
-confgit
+confrepo kialo
+pushd $KIALO_DIR/kialo
+python -m venv $KIALO_ROOT/.direnv/poetry
+npm install
+npm run setup:backend
+download-binaries
+popd
+
+git clone git@kialo.github.com:kialo/infra.git $KIALO_DIR/infra
+confrepo infra
+echo 'plugin_cache_dir = "$INFRA_ROOT/.terraform.d/plugin-cache"' > $KIALO_INFRA/.terraformrc
+mkdir -p $KIALO_DIR/infra/.terraform.d/plugin-cache
+
+git clone git@kialo.github.com:kialo/k8s-resources.git $KIALO_DIR/k8s-resources
+confrepo k8s-resources
+
+mkdir -p $KIALO_ROOT/.{aws,kube}
+chmod 700 $KIALO_ROOT/.{aws,kube}
+gopass -n tools/eks.zsh > $KIALO_ROOT/.kube/eks.zsh
+gopass -n aws/credentials > $KIALO_ROOT/.aws/credentials
+get assets/kialo/kns.zsh $KIALO_DIR/bin/kns
+get assets/kialo/rotate_aws.zsh $KIALO_DIR/bin/rotate_aws
+chmod +x $KIALO_DIR/bin/{kns,rotate_aws,eks}
 
 cat << EOF >> ~/.config/zsh/aliases.zsh
 alias k='kubectl'
@@ -79,22 +96,6 @@ source <(kubectl completion zsh)
 complete -o default -F __start_kubectl k
 EOF
 
-mkdir -p $KIALO_ROOT/.{aws,kube}
-chmod 700 $KIALO_ROOT/.{aws,kube}
-gopass -n tools/eks.zsh > $KIALO_ROOT/.kube/eks.zsh
-gopass -n aws/credentials > $KIALO_ROOT/.aws/credentials
-get assets/kialo/kns.zsh $KIALO_ROOT/../bin/kns
-get assets/kialo/rotate_aws.zsh $KIALO_ROOT/../bin/rotate_aws
-chmod +x $KIALO_ROOT/../bin/{kns,rotate_aws,eks}
-
-popd
-
-git clone git@kialo.github.com:kialo/k8s-resources.git $KIALO_ROOT/../k8s-resources
-pushd $KIALO_ROOT/../k8s-resources
-confgit
-$KIALO_ROOT/../.direnv/python-$PYTHON_VERSION/bin/pip install -r $KIALO_ROOT/../k8s-resources/requirements.txt
-popd
-
 cat << EOF >> $KIALO_ROOT/.git/hooks/prepare-commit-msg
 #!/bin/sh
 
@@ -107,4 +108,4 @@ if [ -n "\$TICKET_NUM" ]; then
 fi
 EOF
 chmod +x $KIALO_ROOT/.git/hooks/prepare-commit-msg
-ln -s $KIALO_ROOT/.git/hooks/prepare-commit-msg $KIALO_ROOT/../k8s-resources/.git/hooks/prepare-commit-msg
+ln -s $KIALO_ROOT/.git/hooks/prepare-commit-msg $KIALO_DIR/k8s-resources/.git/hooks/prepare-commit-msg
