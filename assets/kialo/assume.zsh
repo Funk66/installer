@@ -1,32 +1,8 @@
 #!/bin/zsh
 
-typeset -A ACCOUNTS=(
-  development 1234567890
-  testing     1234567890
-  production  1234567890
-)
-
-ACCOUNT=$1
-ROLE=${2:-admin}
-[ -z ${ACCOUNTS[$ACCOUNT]} ] && ACCOUNT=$(echo ${(k)ACCOUNTS} | tr ' ' '\n' | fzf -1 --height 10 --reverse --query=$ACCOUNT)
-[ -z $ACCOUNT ] || [ "$ACCOUNT" = "$AWS_PROFILE" ] && [ "$ROLE" = "$AWS_ROLE" ] && return
-FILE=${KIALO_ROOT}/.aws/${ACCOUNT}-${ROLE}
-
-if [ ! -f "$FILE" ] || [ "$(find $FILE -mmin +720)" ]
-then
-  unset AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY AWS_SESSION_TOKEN AWS_PROFILE
-  MFA_CODE=$(ykman --device 6931997 oath accounts code aws --single)
-  [ -z ${MFA_CODE} ] && return 1
-  ROLE_INFO=($(aws sts assume-role --duration-seconds 43200 --role-arn "arn:aws:iam::${ACCOUNTS[$ACCOUNT]}:role/${ROLE}" --role-session-name "cli" --serial-number "$MFA_SERIAL" --token-code "$MFA_CODE" --no-cli-auto-prompt --query "Credentials.[AccessKeyId,SecretAccessKey,SessionToken]" --output text))
-  [ "${#ROLE_INFO}" -ne 3 ] && return
-  cat << EOF >! $FILE
-export AWS_ACCESS_KEY_ID=${ROLE_INFO[1]}
-export AWS_SECRET_ACCESS_KEY=${ROLE_INFO[2]}
-export AWS_SESSION_TOKEN=${ROLE_INFO[3]}
-export AWS_PROFILE=${ACCOUNT}
-export AWS_ROLE=${ROLE}
-EOF
+if [ -z "$1" ] || [ -n "$2" ]; then
+  . $KIALO_ROOT/development/aws/assume_role.sh $@
+else
+  . $KIALO_ROOT/development/aws/assume_role.sh $@ admin
 fi
-
 unset KUBECONFIG
-. $FILE

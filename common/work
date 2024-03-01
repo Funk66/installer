@@ -83,11 +83,13 @@ get assets/kialo/kns.zsh $KIALO_DIR/bin/kns
 get assets/kialo/rotate_aws.zsh $KIALO_DIR/bin/rotate_aws
 chmod +x $KIALO_DIR/bin/{kns,rotate_aws,eks}
 
+get assets/kialo/assume.zsh "$KIALO_DIR/bin/assume"
+
 cat << EOF >> ~/.config/zsh/aliases.zsh
 alias k='kubectl'
 alias kk='pushd ~/Workspace/kialo/kialo > /dev/null'
 alias k8='pushd ~/Workspace/kialo/k8s-resources > /dev/null'
-alias assume='. $KIALO_ROOT/development/aws/assume_role.sh'
+alias assume='. $KIALO_DIR/bin/assume'
 alias eks='. $KIALO_ROOT/.kube/eks.zsh'
 EOF
 
