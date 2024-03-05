@@ -1,3 +1,4 @@
 #!/bin/sh
 
 install base-devel man-db man-pages openssh p7zip unrar tar wget rsync imagemagick bat nnn jq bpytop dnstools tree bc ripgrep
+get "common/ripgreprc" "$HOME/.ripgreprc"
