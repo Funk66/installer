@@ -30,7 +30,7 @@ get assets/gopass ~/.config/gopass/config
 sed "s|~|$HOME|" ~/.config/gopass/config
 gopass sync
 
-install pyenv
+[ mac ] && install pyenv --head || install pyenv
 
 export KIALO_DIR=~/Workspace/kialo
 export KIALO_ROOT=$KIALO_DIR/kialo
