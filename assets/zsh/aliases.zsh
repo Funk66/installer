@@ -9,8 +9,6 @@ alias grep='grep --color=auto'
 alias d='dirs -v'
 
 alias isodate='date -u +"%Y-%m-%dT%H:%M:%SZ"'
-alias moon='curl wttr.in/Moon'
-alias weather='curl wttr.in/Berlin'
 
 cht() {
   curl cht.sh/$1
