@@ -4,5 +4,13 @@ setup zsh
 
 available fzf || install fzf
 curl -sSL https://raw.githubusercontent.com/junegunn/fzf/master/shell/completion.zsh -o ~/.config/zsh/fzf.zsh
-curl -sSL https://raw.githubusercontent.com/junegunn/fzf/master/shell/key-bindings.zsh >> ~/.config/zsh/fzf.zsh
-grep '. ~/.config/zsh/fzf.zsh' ~/.zshrc || echo '. ~/.config/zsh/fzf.zsh 2> /dev/null' >> ~/.zshrc
+curl -sSL https://raw.githubusercontent.com/junegunn/fzf/master/shell/key-bindings.zsh >>~/.config/zsh/fzf.zsh
+grep '. ~/.config/zsh/fzf.zsh' ~/.zshrc || echo '. ~/.config/zsh/fzf.zsh 2> /dev/null' >>~/.zshrc
+cat <<EOF >>~/.zshrc
+export FZF_CTRL_T_OPTS="
+  --walker-skip .git,node_modules,target
+  --preview 'bat -n --color=always {}'
+  --bind 'ctrl-/:change-preview-window(down|hidden|)'"
+export FZF_DEFAULT_COMMAND="rg --files"
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+EOF
