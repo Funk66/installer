@@ -1,0 +1,9 @@
+#!/bin/zsh
+
+brew install ghostty
+cat <<EOF>!$HOME/Library/Application\ Support/com.mitchellh.ghostty/config
+theme = iTerm2 Default
+macos-titlebar-style = hidden
+clipboard-paste-protection = false
+macos-option-as-alt = left
+EOF
